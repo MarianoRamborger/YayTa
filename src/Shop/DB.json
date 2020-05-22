@@ -1,0 +1,159 @@
+[   {
+    "id":"1",
+    "title":"Manzana",
+    "type":"fruta",
+    "oferta":true,
+    "image":"https://choosemyplate-prod.azureedge.net/sites/default/files/myplate/foodgallerycupoz/apples.gif",
+    "price": 3,
+    "desc":"Roja!",
+    "stock":999
+ 
+},
+ {
+    "id":"2",
+    "title":"Manzana",
+    "type":"fruta",
+    "oferta":true,
+    "image":"https://image.shutterstock.com/image-photo/green-apple-on-white-background-260nw-692320789.jpg",
+    "price": 4,
+    "desc":"Verde",
+    "stock":999
+ 
+},
+ {
+    "id":"3",
+    "title":"Manzana",
+    "type":"fruta",
+    "oferta":true,
+    "image":"https://previews.123rf.com/images/artemkutsenko/artemkutsenko1812/artemkutsenko181200055/115249728-fresh-wet-golden-apple-fruit-isolated-on-white-background.jpg",
+    "price": 4,
+    "desc":"Dorada",
+    "stock":999
+ 
+},
+ {
+    "id":"4",
+    "title":"Manzana",
+    "type":"fruta",
+    "oferta":true,
+    "image":"https://i.pinimg.com/originals/e0/fe/1c/e0fe1c0ebd2f75d5f682b058142618fd.jpg",
+    "price":15,
+    "desc":"Azul??",
+    "stock":999
+ 
+},
+ {
+    "id":"5",
+    "title":"Banana",
+    "type":"fruta",
+    "oferta":true,
+    "image":"https://www.kroger.com/product/images/xlarge/front/0000000004011",
+    "price": 5,
+    "desc":"Pa variar",
+    "stock":999
+ 
+},
+ {
+    "id":"6",
+    "title":"No Mandarinas",
+    "type":"fruta",
+    "oferta":true,
+    "image":"https://www.nbnaturalcare.com/wp-content/uploads/2018/11/mandarina.jpg",
+    "price": 2,
+    "desc":"No",
+    "stock":999
+ 
+},
+ {
+    "id":"7",
+    "title":"Durazno",
+    "type":"fruta",
+    "oferta":true,
+    "image":"https://www.elnacional.com/wp-content/uploads/2018/01/durazno-tiene-multiples-propiedades-medicinales_221238-696x526.jpg",
+    "price": 5 ,
+    "desc":"La Mejor Fruta",
+    "stock":999
+ 
+},
+ {
+    "id":"8",
+    "title":"Ciruela",
+    "type":"fruta",
+    "oferta":true,
+    "image":"https://elpoderdelconsumidor.org/wp-content/uploads/2015/04/ciruelas-_rojas-3.jpg",
+    "price": 3,
+    "desc":"Cuando el durazno está caro",
+    "stock":999
+ 
+},
+{
+    "id":"9",
+    "title":"Cebolla",
+    "type":"verdura",
+    "oferta":true,
+    "image":"https://p0.pikrepo.com/preview/562/447/brown-onion.jpg",
+    "price": 2,
+    "desc":"Cebolla dorada",
+    "stock":999
+},
+{
+    "id":"10",
+    "title":"Morrón",
+    "type":"verdura",
+    "oferta":true,
+    "image":"https://www.solocarnes.com/wp-content/uploads/2019/02/como-pelar-un-pimiento.jpg",
+    "price": 5,
+    "desc":"Morrón Rojo",
+    "stock":999
+},
+{
+    "id":"11",
+    "title":"Papa",
+    "type":"verdura",
+    "oferta":true,
+    "image":"https://api.time.com/wp-content/uploads/2020/04/Boss-Turns-Into-Potato.jpg",
+    "price": 3,
+    "desc":"Papa cepillada",
+    "stock":999
+},
+{
+    "id":"12",
+    "title":"Tomate",
+    "type":"verdura",
+    "oferta":true,
+    "image":"https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Bright_red_tomato_and_cross_section02.jpg/1200px-Bright_red_tomato_and_cross_section02.jpg",
+    "price": 2,
+    "desc":"Tomate rojo",
+    "stock":999
+},
+{
+    "id":"13",
+    "title":"Lechuga",
+    "type":"verdura",
+    "oferta":true,
+    "image":"https://img.vixdata.io/pd/jpg-large/es/sites/default/files/imj/otramedicina/1/155307039.jpg",
+    "price": 2,
+    "desc":"Lechuga manteca",
+    "stock":999
+},
+{
+    "id":"14",
+    "title":"Zanahoria",
+    "type":"verdura",
+    "oferta":true,
+    "image":"https://img.freepik.com/foto-gratis/zanahoria-entera-aislada_88281-1988.jpg?size=626&ext=jpg",
+    "price": 2,
+    "desc":"Zanahoria red",
+    "stock":999
+},
+{
+    "id":"15",
+    "title":"Zapallo",
+    "type":"verdura",
+    "oferta":false,
+    "image":"https://images-ti-vm1.tiendainglesa.com.uy/large/P017491-1.jpg?20181124030411,Zapallito-Granel-Kg-en-Tienda-Inglesa",
+    "price": 2,
+    "desc":"Zapallito",
+    "stock":999
+}
+]
