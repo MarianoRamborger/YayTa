@@ -78,7 +78,9 @@ const onChangeHandler = (event) => {
       <CardActionArea className="card-area">
         <CardMedia 
           className={`${classes.media} card-image`}
-          image = {props.image} style={{ width: "20% !important", height: "400px"   }}
+          image = {props.image} style={
+            { width: "20% !important", height: "400px"
+            }}
                                                         
           title={props.title}
          

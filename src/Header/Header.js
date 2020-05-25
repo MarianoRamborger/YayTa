@@ -184,7 +184,6 @@ const cartContext = useContext(shoppingCartContext)
       onClose={handleMobileMenuClose}
     >
 
-
     </Menu>
   );
 
@@ -214,8 +213,7 @@ const cartContext = useContext(shoppingCartContext)
               }}
               inputProps={{ 'aria-label': 'search' }}
               onChange={props.handleSearchBarState}
-             />
-            
+             />      
           </div>
          
           <ClearIcon  onClick={props.clearSearchBar} className="pull"/>
@@ -288,11 +286,12 @@ const cartContext = useContext(shoppingCartContext)
                     </IconButton>
                   </MenuItem>
               :
-                <div>
-                      <Button className="login-button" onClick={handleModelToggler}> <AccountCircle />  
-                      </Button>
-                      <Modal modalState={isModalOpen} handleModalToggler={handleModelToggler} LogIn={LogIn}  /> 
-                </div>
+              <React.Fragment>
+                <Button  className="login-button" onClick={handleModelToggler}> <AccountCircle />  
+              </Button>
+              <Modal modalState={isModalOpen} handleModalToggler={handleModelToggler} LogIn={LogIn}  /> 
+             
+             </React.Fragment>
           }
           </div>
 
