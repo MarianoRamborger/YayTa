@@ -342,10 +342,11 @@ body {
   color: brown
 }
 
-@media only screen and (max-width: 1150px) { 
+@media only screen and (max-width: 800px) { 
   .card {
-    width: 175px;
+    width: 175px !important;
     min-width: 175px !important;
+    border: 2px solid red
     
   }
   .shopDiv {
