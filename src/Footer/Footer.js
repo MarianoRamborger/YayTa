@@ -22,7 +22,7 @@ export default function Footer() {
 
   return (
     <div className={`${classes.root} footer`} >
-      <AppBar position="static">
+      <AppBar position="static" className="footer-app-bar">
         <Toolbar id="footer-bar">
           <Typography variant="h6" className={classes.title}>
             Footer

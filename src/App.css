@@ -370,4 +370,9 @@ body {
     margin-left: 2px !important;
     margin-right: 2px !important;
   }
+
+  .footer, #footer-bar, .footer-app-bar { 
+    visibility: hidden !important;
+    display: none;
+  }
 }
