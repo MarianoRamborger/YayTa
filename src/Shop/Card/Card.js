@@ -15,7 +15,6 @@ import RemoveIcon from '@material-ui/icons/Remove';
 
 
 
-
 const useStyles = makeStyles({
   root: {
     maxWidth: 345,
@@ -76,12 +75,15 @@ const onChangeHandler = (event) => {
 
   return (
     <Card className={`${classes.root} card`} id={props.id}>
-      <CardActionArea>
-        <CardMedia
-          className={classes.media}
-          image={props.image}
+      <CardActionArea className="card-area">
+        <CardMedia 
+          className={`${classes.media} card-image`}
+          image = {props.image} style={{ width: "20% !important", height: "400px"   }}
+                                                        
           title={props.title}
+         
         />
+         
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
             {props.title}
@@ -91,7 +93,7 @@ const onChangeHandler = (event) => {
           </Typography>
         </CardContent>
       </CardActionArea>
-      <CardActions>
+      <CardActions className="class-actions">
         <Button size="small" color="primary" onClick={ShopListRemove}>
           <RemoveIcon className="shop-icons"  />
         </Button>

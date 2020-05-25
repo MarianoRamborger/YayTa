@@ -3,8 +3,9 @@
 }
 
 .footer {
+  position: fixed ;
   width: 100%;
-  position: fixed; 
+  margin-top: 15px;
   bottom: 0;
   left: 0;
 }
@@ -22,22 +23,32 @@
 
     display: flex;
     flex-flow: row wrap;
-    justify-content: space-between;
-    margin: 0px 5%
+    justify-content: center;
+    margin: 0 6%;
+    margin-bottom: 7% !important;
+  
     
     
 }
 
 @media only screen and (max-width: 550px) {
   .shopDiv {
-    justify-content: center
-  }
-}
+    justify-content: center;
+   
+  }}
+
+
 
 .card {
-  margin: 10px;
-  width: 200px;
+  margin: 10px 0.5%;
+  /* width: 20% !important;
+  height: 400px;
+  min-width: 200px !important; */
+ 
 }
+
+@media only screen and (max-width: 550px) { }
+
 
 .drawerLink {
   width: 100%;
@@ -122,7 +133,8 @@
 
 #footer-bar {
   background-color: white !important;
-  background-image: repeating-linear-gradient(to right, rgba(157, 45, 108, 1) 30%, rgba(157, 45, 108, 0.7) 15%)
+  background-image: repeating-linear-gradient(to right, rgba(157, 45, 108, 1) 30%, rgba(157, 45, 108, 0.7) 15%);
+  height: 10px;
 }
 
 .modal-button {
@@ -182,9 +194,11 @@ body {
 
 
 .shop-title {
-  color: rgba(109, 179, 34, 1);
+  color: #BF095F;
   font-weight: bolder;
   font-size: 2em;
+  text-shadow: 0px 1px 12px rgba(255, 109, 170, 0.8);
+  
 }
 
 .shop-icons {
@@ -200,7 +214,7 @@ body {
 
 .list-topper-item {
  
-  background-image: linear-gradient(to right, rgba(109, 179, 34, 1), rgba(181, 234, 81, 0.8));
+  background-image: linear-gradient(to right, rgba(157, 45, 108, 1), rgba(157, 45, 108, 0.7));
   color: whitesmoke;
 }
 
@@ -266,6 +280,7 @@ body {
   margin: 3px !important;
   padding: 4px! important;
   border: none !important;
+
 }
 
 .drop-down-toggle * {
@@ -306,5 +321,24 @@ body {
   box-shadow: none !important;
   
 
+}
+
+
+
+
+
+.class-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.nav-link {
+  color: black
+}
+
+.nav-link-toggler:hover  {
+  background-color: rgba(223, 177, 198, 1) ;
+  color: brown
 }
 

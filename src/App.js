@@ -195,14 +195,59 @@ const App = () => {
             <Shop  title={"Ofertas"} target={true} search={searchBarState} reset={0}/>
           </Route>
 
-          <Route path="/Frutas">
-            <Shop  title={"Frutas"} target={"fruta"} search={searchBarState} reset={0}/>
+          <Route path="/Pantalones/Jeans">
+            <Shop  title={"Jeans"} target={"Jean"} search={searchBarState} reset={0}/>
+          </Route>
+
+          <Route path="/Pantalones/Bengalinas">
+            <Shop  title={"Bengalinas"} target={"Bengalina"} search={searchBarState} reset={0}/>
           </Route>
         
-
-          <Route path="/Verduras">
-            <Shop title={"Verduras"} target={"verdura"} search={searchBarState} reset={0}/>
+          <Route path="/Joggings/Calzas">
+            <Shop title={"Calzas"} target={"Calza"} search={searchBarState} reset={0}/>
           </Route>
+
+          <Route path="/Joggings/Calzas-Frizadas">
+            <Shop title={"Calzas Frizadas"} target={"Calza-Frizada"} search={searchBarState} reset={0}/>
+          </Route>
+
+          <Route path="/Camperas/Jean">
+            <Shop title={"Camperas de Jean"} target={"Campera-Jean"} search={searchBarState} reset={0}/>
+          </Route>
+
+          <Route path="/Camperas/Jogging">
+            <Shop title={"Camperas deportivas"} target={"Campera-Jogging"} search={searchBarState} reset={0}/>
+          </Route>
+
+          <Route path="/Remeras/Personajes">
+            <Shop title={"Remeras de Personaje"} target={"Remera-Personaje"} search={searchBarState} reset={0}/>
+          </Route>
+
+          <Route path="/Remeras/Todo">
+            <Shop title={"Remeras"} target={"Remera-Personaje"} search={searchBarState} reset={0}/>
+          </Route>
+
+          <Route path="/Sweaters">
+            <Shop title={"Sweaters"} target={"Sweater"} search={searchBarState} reset={0}/>
+          </Route>
+               
+          <Route path="/Camisetas">
+            <Shop title={"Camisetas"} target={"Camiseta"} search={searchBarState} reset={0}/>
+          </Route>
+
+          <Route path="/Cinturones">
+            <Shop title={"Cinturones"} target={"Cinturon"} search={searchBarState} reset={0}/>
+          </Route>
+          
+          <Route path="/Medias">
+            <Shop title={"Medias"} target={"Media"} search={searchBarState} reset={0}/>
+          </Route>
+
+          <Route path="/Accesorios">
+            <Shop title={"Accesorios"} target={"Accesorios"} search={searchBarState} reset={0}/>
+          </Route>
+
+
 
 
 

@@ -27,14 +27,14 @@ export default function ButtonAppBar() {
 
          
         
-
+        <button className="nav-link jello-horizontal" >  <Link to="/" > Ofertas </Link> </button>
         <Dropdown>
-            <Dropdown.Toggle className="drop-down-toggle jello-horizontal">
+            <Dropdown.Toggle className="drop-down-toggle jello-horizontal nav-link-toggler">
                 <h6 >Pantalones</h6>
             </Dropdown.Toggle>
             <Dropdown.Menu>
-              <Dropdown.Item href="/frutas" className="dropdown-link">  Jeans </Dropdown.Item>
-              <Dropdown.Item href="/frutas" className="dropdown-link">  Bengalinas </Dropdown.Item>
+               <Link to="/Pantalones/Jeans" className="nav-link nav-link-toggler"> Jeans </Link> 
+              <Link to="/Pantalones/Bengalinas" className="nav-link nav-link-toggler"> Bengalinas </Link> 
             </Dropdown.Menu>
           </Dropdown>
 
@@ -43,8 +43,8 @@ export default function ButtonAppBar() {
                 <h6>Joggings</h6>
             </Dropdown.Toggle>
             <Dropdown.Menu>
-              <Dropdown.Item href="/frutas" className="dropdown-link"> Calzas </Dropdown.Item>
-              <Dropdown.Item href="/frutas" className="dropdown-link"> Calzas frizadas </Dropdown.Item>
+              <Link to="/Joggings/Calzas" className="nav-link nav-link-toggler"> Calzas </Link> 
+               <Link to="/Joggings/Calzas-Frizadas" className="nav-link nav-link-toggler"> Calzas Frizadas </Link>  
             </Dropdown.Menu>
           </Dropdown>
 
@@ -53,8 +53,8 @@ export default function ButtonAppBar() {
                 <h6>Camperas</h6>
             </Dropdown.Toggle>
             <Dropdown.Menu>
-              <Dropdown.Item href="/frutas" className="dropdown-link"> Jean </Dropdown.Item>
-              <Dropdown.Item href="/frutas" className="dropdown-link"> Jogging </Dropdown.Item>
+              <Link to="/Camperas/Jean" className="nav-link nav-link-toggler"> De Jean </Link> 
+               <Link to="/Camperas/Jogging" className="nav-link nav-link-toggler"> Deportivas </Link> 
             </Dropdown.Menu>
           </Dropdown>
 
@@ -63,21 +63,17 @@ export default function ButtonAppBar() {
                 <h6>Remeras</h6>
             </Dropdown.Toggle>
             <Dropdown.Menu>
-              <Dropdown.Item href="/frutas" className="dropdown-link">  Personaje </Dropdown.Item>
-              <Dropdown.Item href="/frutas" className="dropdown-link">  De todo </Dropdown.Item>
+                  <Link to="/Remeras/Personajes" className="nav-link"> De Personaje </Link>   
+                  <Link to="/Remeras/Todo" className="nav-link"> De todo! </Link>   
             </Dropdown.Menu>
           </Dropdown>
 
-          <button className="nav-link jello-horizontal" >  <Link  > Sweaters </Link> </button>
-          <button  className="nav-link jello-horizontal"> <Link > Camisetas </Link> </button>
-          <button className="nav-link jello-horizontal">   <Link  > Cinturones </Link>  </button>
-          <button className="nav-link jello-horizontal">     <Link > Medias </Link>   </button>
-          <button  className="nav-link jello-horizontal">   <Link > Accesorios </Link> </button>
+          <button className="nav-link jello-horizontal" >  <Link to="/Sweaters" > Sweaters </Link> </button>
+          <button  className="nav-link jello-horizontal"> <Link to="/Camisetas" > Camisetas </Link> </button>
+          <button className="nav-link jello-horizontal">   <Link to="/Cinturones" > Cinturones </Link>  </button>
+          <button className="nav-link jello-horizontal">     <Link to="/Medias"> Medias </Link>   </button>
+          <button  className="nav-link jello-horizontal">   <Link to="/Accesorios"> Accesorios </Link> </button>
           
-        
-       
-         
-
 
         
         </Toolbar>

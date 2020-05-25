@@ -21,7 +21,7 @@ const HomeShop = (props) => {
     return (
         
 
-        <div>
+        <div >
         <p className="centered shop-title" > {props.title} </p>
 
            
@@ -66,12 +66,7 @@ const HomeShop = (props) => {
                         }   else return null
                         }   else return null
 
-                        
-                         
-                        
-                       
 
-      
                     } 
                    
 
