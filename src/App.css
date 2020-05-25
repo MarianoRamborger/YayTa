@@ -346,12 +346,11 @@ body {
   .card {
     width: 160px !important;
     min-width: 160px !important;
-    border: 2px solid red;
      
   }
   
   .card-image {
-    height: 350px !important;
+    height: 300px !important;
     
   }
 
