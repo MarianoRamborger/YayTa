@@ -375,4 +375,18 @@ body {
     visibility: hidden !important;
     display: none;
   }
+
+  #searchBar {
+    display: none;
+    visibility: hidden
+  }
+
+  .pull { 
+    visibility: hidden;
+    margin-right: 0px;
+  }
+
+  #header-bar {
+    justify-items: start !important;
+  }
 }
