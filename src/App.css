@@ -344,7 +344,7 @@ body {
 
 @media only screen and (max-width: 1150px) { 
   .card {
-    width: 250px;
+    width: 150px;
     min-width: 250px !important
   }
 }
