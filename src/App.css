@@ -347,9 +347,26 @@ body {
     width: 160px !important;
     min-width: 160px !important;
     border: 2px solid red;
-    height: 300px;
+     
+  }
+  
+  .card-image {
+    height: 350px !important;
     
   }
+
+  .card-title {
+    font-size: 1em !important;
+  }
+
+  .card-content {
+    padding-bottom: 0px !important;
+  }
+
+  .class-actions {
+    padding-bottom: 3px !important
+  }
+
   .shopDiv {
     margin-left: 2px !important;
     margin-right: 2px !important;

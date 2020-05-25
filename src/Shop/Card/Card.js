@@ -86,8 +86,8 @@ const onChangeHandler = (event) => {
          
         />
          
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
+        <CardContent className="card-content">
+          <Typography gutterBottom variant="h5" component="h2" className="card-title" >
             {props.title}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
