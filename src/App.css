@@ -347,4 +347,8 @@ body {
     width: 150px;
     min-width: 250px !important
   }
+  .shopDiv {
+    margin-left: 1% !important;
+    margin-right: 1% !important;
+  }
 }
