@@ -344,9 +344,10 @@ body {
 
 @media only screen and (max-width: 800px) { 
   .card {
-    width: 175px !important;
-    min-width: 175px !important;
-    border: 2px solid red
+    width: 160px !important;
+    min-width: 160px !important;
+    border: 2px solid red;
+    height: 300px;
     
   }
   .shopDiv {
