@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react'; //Vital para usar context
+import React, {useContext, useState, useEffect} from 'react'; //Vital para usar context
 import { fade, makeStyles } from '@material-ui/core/styles';
 import { AuthContext } from '../App';
 
@@ -19,6 +19,8 @@ import {shoppingCartContext} from '../App'
 import Modal from '../Modal/Modal'
 import ClearIcon from '@material-ui/icons/Clear';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { GenerateJWT, DecodeJWT, ValidateJWT } from '../services/JWTservice'
+
 
 
 
@@ -87,7 +89,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
+  
 
   const PrimarySearchAppBar = (props) => {
 
@@ -96,6 +98,7 @@ const useStyles = makeStyles((theme) => ({
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const [isModalOpen, toggleModal] = useState(false)
+  const [callResponse, changeResponse] = React.useState({ resp: null, data: null } )
 
 
 
@@ -125,6 +128,7 @@ const useStyles = makeStyles((theme) => ({
     
   }
 
+  
 
 // desktop
 
@@ -187,12 +191,29 @@ const cartContext = useContext(shoppingCartContext)
     </Menu>
   );
 
- 
+  useEffect(() => {
+
+    if (!isLogged.state.isAuthenticated && typeof Storage !== "undefined" && localStorage.getItem("JWT") !== null) {
+        console.log("hooking why dos veces? revisar")
+           let j = localStorage.getItem("JWT")
+           DecodeJWT(j, data => { changeResponse({resp: j, data : data})
+           LogIn()
+          })
+           
+        }
+        }
+
+      
+      
+      
+    
+   , [callResponse] ) //lista de dependencias. UseEffect solo va a shootear si los estados listados acá cambianesto cambia.
 
   
   return (
 
- 
+
+
     <div  >
       <AppBar position="static" className="header-app-bar"   >
 
@@ -239,12 +260,10 @@ const cartContext = useContext(shoppingCartContext)
             isLogged.state.isAuthenticated 
           ? 
             <IconButton
-              edge="end"
-              aria-label="account of current user"
               aria-controls={menuId}
               aria-haspopup="true"
               onClick={handleProfileMenuOpen}
-              className= "account-circle"
+              className= "account-circle on"
             >
             <AccountCircle />
             </IconButton>    
@@ -254,7 +273,7 @@ const cartContext = useContext(shoppingCartContext)
             <React.Fragment>
             <Button  className="login-button" onClick={handleModelToggler}> <AccountCircle />  
              </Button>
-             <Modal modalState={isModalOpen} handleModalToggler={handleModelToggler} LogIn={LogIn}  /> 
+             <Modal modalState={isModalOpen} handleModalToggler={handleModelToggler} LogIn={LogIn} changeResponse={changeResponse} callResponse={callResponse} /> 
              
              </React.Fragment>
           } 
@@ -266,7 +285,7 @@ const cartContext = useContext(shoppingCartContext)
         {/* Mobile Profile */}
           <div className={`${classes.sectionMobile} push`}>
           <IconButton
-              className ="shopping-cart-icon"
+              className ="shopping-cart-icon on"
               >
                 <Badge badgeContent={cartContext.state2.shoppingList.length} color="secondary"> <ShoppingCart/> </Badge>  
               {/* <ShoppingCart /> */}

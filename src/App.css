@@ -135,6 +135,8 @@
   background-color: white !important;
   background-image: repeating-linear-gradient(to right, rgba(157, 45, 108, 1) 30%, rgba(157, 45, 108, 0.7) 15%);
   height: 10px;
+  margin-right: 0px;
+  padding-right: 0px;
 }
 
 .modal-button {
@@ -389,4 +391,13 @@ body {
   #header-bar {
     justify-items: start !important;
   }
+}
+
+.register-prompt {
+  text-align: center;
+
+}
+
+.on {
+  color: #B4D477 !important
 }

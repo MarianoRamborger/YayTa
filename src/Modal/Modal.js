@@ -5,6 +5,7 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
 import Button from '@material-ui/core/Button';
+import { GenerateJWT, DecodeJWT, ValidateJWT } from '../services/JWTservice'
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -61,6 +62,7 @@ export default function SpringModal(props) {
   const [errorState, changeErrorState] = React.useState({formError: null})
   
 
+
   const handleUserNameChange = (event) => {
     changeState ( {
       username : event.target.value,
@@ -103,9 +105,9 @@ export default function SpringModal(props) {
 
   };
 
-  const handleErrors = (error) => {
-    changeErrorState({ formError :  error })
-  }
+  // const handleErrors = (error) => {
+  //   changeErrorState({ formError :  error })
+  // }
 
 
   if (props.modalState === true && controller === true) {
@@ -114,16 +116,49 @@ export default function SpringModal(props) {
       
   }
 
-  const handshake = () => {
+  const debug = () => {
+    console.log(props.callResponse)
+  }
 
-    if (formState.username === "user" && formState.password ==="user") {
-      handleClose()
-      props.LogIn()
+  const handshake =  async () => {
+    const Username = formState.username
+    const Password = formState.password
+
+
+    const Claims = { Username, Password }
+    const Header = { alg: "HS512" , typ: "JWT"}
+
+    GenerateJWT(Header, Claims, null, res => {
+      if (res.status === 200 ) {
+        
+        let response = res.data
+ 
+        if (typeof Storage !== "undefined") {localStorage.setItem("JWT", res.data)} //loads on localstorage, si el navegador lo soporta.
       
-    }
-    else {
-      handleErrors("Usuario y/o contraseña incorrectos")
-    }
+        
+
+        DecodeJWT(response, data => {
+
+
+          console.log(data)
+          props.changeResponse({ resp : response, data: data.data})
+          if (res.status === 200) {
+            handleClose() 
+            props.LogIn()
+          }
+        })
+
+   
+        
+   
+  
+      } else {
+         props.changeResponse("error")
+        console.log("error")
+      }
+    
+    })
+
 
 
    
@@ -154,11 +189,15 @@ export default function SpringModal(props) {
             <h2 id="spring-modal-title"> Login </h2>
             <p id="spring-modal-description"> Back-end en proceso. Probar user user.</p>
             <form className="modal-form">
-              <input className="modal-input"   type="text" name="user" placeholder="user" onChange={handleUserNameChange} />
+              
+              <input className="modal-input"  type="text" name="user" placeholder="user" onChange={handleUserNameChange} />
               <input className="modal-input" type="text"  name="password" placeholder="user" onChange={handlePasswordChange}/>
               <Button className="modal-button" size="small" variant="contained" color="primary" onClick={handshake}> INGRESAR </Button>
               <p className="form-error-text"> {errorState.formError} </p>
+             
             </form>
+            <p className="register-prompt"> No tenes cuenta? registrate! </p>
+            <button onClick={debug}>DEBUG ME</button>
           </div>
         </Fade>
       </Modal>
