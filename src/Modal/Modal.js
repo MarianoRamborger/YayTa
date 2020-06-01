@@ -105,9 +105,9 @@ export default function SpringModal(props) {
 
   };
 
-  // const handleErrors = (error) => {
-  //   changeErrorState({ formError :  error })
-  // }
+  const handleErrors = (error) => {
+    changeErrorState({ formError :  error })
+  }
 
 
   if (props.modalState === true && controller === true) {
@@ -124,44 +124,53 @@ export default function SpringModal(props) {
     const Username = formState.username
     const Password = formState.password
 
+    if (Username.trim().length > 3 || Password.trim.length > 3) {
 
-    const Claims = { Username, Password }
-    const Header = { alg: "HS512" , typ: "JWT"}
+    //   const Claims = { Username, Password }
+    // const Header = { alg: "HS512" , typ: "JWT"}
 
-    GenerateJWT(Header, Claims, null, res => {
-      if (res.status === 200 ) {
+    // GenerateJWT(Header, Claims, null, res => {
+    //   if (res.status === 200 ) {
         
-        let response = res.data
+    //     let response = res.data
  
-        if (typeof Storage !== "undefined") {localStorage.setItem("JWT", res.data)} //loads on localstorage, si el navegador lo soporta.
+    //     if (typeof Storage !== "undefined") {localStorage.setItem("JWT", res.data)} //loads on localstorage, si el navegador lo soporta.
       
-        
 
-        DecodeJWT(response, data => {
+    //     DecodeJWT(response, data => {
 
-
-          console.log(data)
-          props.changeResponse({ resp : response, data: data.data})
-          if (res.status === 200) {
-            handleClose() 
-            props.LogIn()
-          }
-        })
-
-   
-        
-   
-  
-      } else {
-         props.changeResponse("error")
-        console.log("error")
-      }
+    //       props.changeResponse({ resp : response, data: data.data})
     
-    })
+    //       if (res.status === 200) {
+    //         handleClose() 
+         
+
+    //         props.LogIn(res, data.data.UserName)
+    //       }
+    //     })
 
 
+  
+      // } else {
+      //    props.changeResponse("error")
+      //   console.log("error")
+      // }
+    
+      props.LogIn(Username, Password)
+      
+
+    }
+    // )
+
+  // }
 
    
+
+    else  {
+      handleErrors("Ingrese nombre de usuario y contraseña")
+    }
+
+    
  
   }
 

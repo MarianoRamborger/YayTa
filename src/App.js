@@ -13,8 +13,8 @@ import './App.css';
 import Header from './Header/Header.js'
 import Footer from './Footer/Footer.js'
 import LinkBar from './Header/LinkBar.js'
-
 import Shop from './Shop/Shop'
+import {AuthUser} from "./services/Authservice"
 
 
 //https://www.freecodecamp.org/news/state-management-with-react-hooks/
@@ -22,7 +22,7 @@ import Shop from './Shop/Shop'
 
 export const AuthContext = React.createContext()
 
-const initialState = { isAuthenticated: false, user: null, token: null };
+const initialState = { isAuthenticated: false, user: null };
 
 export const shoppingCartContext = React.createContext();
 
@@ -33,17 +33,23 @@ const shoppingCartInitialState = { shoppingList : [], total : 0 }
 const reducer = (state, action) => {
   switch (action.type) {
     case "LOGIN": {
-      localStorage.setItem("user", JSON.stringify(action.payload.user)); localStorage.setItem("token", JSON.stringify(action.payload.token));   
-      return {
-        ...state, isAuthenticated: true, user: action.payload.user, token: action.payload.token
-      }}
+         
+      localStorage.setItem("JWT", action.JWT)
+        return {
+                ...state, isAuthenticated: true, user: action.userName
+               }             
+      }
     
     case "LOGOUT": {
-      localStorage.clear()
-      return { ...state, isAuthenticated: false, user: null, token: null
+      
+      localStorage.removeItem("JWT") ; localStorage.removeItem("userName")
+      return { ...state, isAuthenticated: false, user: null
       }}
       default: return state
   }
+
+
+
 }
 
 

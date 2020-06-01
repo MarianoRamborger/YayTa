@@ -1,6 +1,7 @@
-import React, {useContext, useState, useEffect} from 'react'; //Vital para usar context
+import React, {useContext, useState, useEffect, useCallback} from 'react'; //Vital para usar context
 import { fade, makeStyles } from '@material-ui/core/styles';
 import { AuthContext } from '../App';
+import { AuthUser} from '../services/Authservice'
 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -20,8 +21,6 @@ import Modal from '../Modal/Modal'
 import ClearIcon from '@material-ui/icons/Clear';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { GenerateJWT, DecodeJWT, ValidateJWT } from '../services/JWTservice'
-
-
 
 
 
@@ -90,7 +89,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
   
-
   const PrimarySearchAppBar = (props) => {
 
 
@@ -133,12 +131,33 @@ const useStyles = makeStyles((theme) => ({
 // desktop
 
  // Función de Login temporal. Modifica el estado del Provider desde el Consumer
- const LogIn = () => {
-    handleMobileMenuClose()
-    isLogged.dispatch({
-    type: "LOGIN",
-    payload: "eee"
-})}
+ const LogIn = (Username, Password) => {
+   
+    AuthUser(Username, Password, (res, err) => {
+      if (err) {
+        console.log("que macana no loguea. AGREGAME UN ERROR DESPUES")
+      }
+      else {
+        if (res.status === 200 ) {
+          handleMobileMenuClose()
+          
+          DecodeJWT(res.data.JWT, data => {
+            
+            isLogged.dispatch({ type: "LOGIN", Username: data.data.Username, JWT: res.data.JWT})             
+          })
+          }
+         } 
+       
+    })
+    
+}
+
+const JWTLogIn = (JWT) => {
+
+
+
+}
+
 
 const LogOut = () => {
   handleMenuClose()
@@ -195,10 +214,16 @@ const cartContext = useContext(shoppingCartContext)
 
     if (!isLogged.state.isAuthenticated && typeof Storage !== "undefined" && localStorage.getItem("JWT") !== null) {
         console.log("hooking why dos veces? revisar")
+
+
            let j = localStorage.getItem("JWT")
-           DecodeJWT(j, data => { changeResponse({resp: j, data : data})
-           LogIn()
+           DecodeJWT(j, data => { 
+             console.log(data)
+             isLogged.dispatch({ type: "LOGIN", Username: data.data.Username, JWT: j})   
+             //ojo this needs to be improved.
+             // also cuando le das logout no se vuelve a abrir el menu          
           })
+          
            
         }
         }
@@ -207,7 +232,7 @@ const cartContext = useContext(shoppingCartContext)
       
       
     
-   , [callResponse] ) //lista de dependencias. UseEffect solo va a shootear si los estados listados acá cambianesto cambia.
+    ) //lista de dependencias. UseEffect solo va a shootear si los estados listados acá cambianesto cambia.
 
   
   return (

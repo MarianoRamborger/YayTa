@@ -1,6 +1,7 @@
 const express = require("express");
 const morgan = require("morgan")
 const { GenerateJWT, DecodeJWT, ValidateJWT } = require("./dec-enc.js"); //importar solo estas funciones especificas por razones de seguridad.
+const Users = require('./tempDB.js')
 
 const app = express();
 
@@ -27,6 +28,35 @@ app.post("/api/ValidateJWT", (req, res) => {
     res.json(ValidateJWT(header, token, key))
  })
 
+ app.post("/api/users/signin", (req, res) => {
+    const { Username, Password } = req.body
+    
+  if (typeof Users[req.body.Username] !== "undefined") {    
+    if (Users[req.body.Username] === req.body.Password) { //Esto solo es posible porque en la fakeDB los users son keys y los passwords son value
+      
+        const header = { alg: "HS512", typ: "JWT"}
+        const claims = { Username }
+        const key = "$Clavesupersecreta05"
+
+        res.json({ 
+            Message: "Logueado exitoso",
+            JWT: GenerateJWT(header, claims, key)
+        });
+
+
+    } else {
+  
+      res.status(403).json({
+        Message: "Invalid Username or Password!"
+      });
+    }
+  } else {
+   
+    res.status(403).json({
+      Message: "User Not Found!"
+    });
+  }
+});
 
 
 app.listen(port, () => console.log(`Escuchando el puerto ${port}!`));
