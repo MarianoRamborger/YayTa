@@ -1,4 +1,4 @@
-import React, {useContext, useState, useEffect, useCallback} from 'react'; //Vital para usar context
+import React, {useContext, useState, useEffect} from 'react'; //Vital para usar context
 import { fade, makeStyles } from '@material-ui/core/styles';
 import { AuthContext } from '../App';
 import { AuthUser} from '../services/Authservice'
@@ -20,7 +20,11 @@ import {shoppingCartContext} from '../App'
 import Modal from '../Modal/Modal'
 import ClearIcon from '@material-ui/icons/Clear';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { GenerateJWT, DecodeJWT, ValidateJWT } from '../services/JWTservice'
+import { 
+ // GenerateJWT, 
+  DecodeJWT 
+  //,ValidateJWT 
+        } from '../services/JWTservice'
 
 
 
@@ -122,7 +126,8 @@ const useStyles = makeStyles((theme) => ({
 
   const handleModelToggler = () => {
     if (isModalOpen === false)  { toggleModal(true) }
-    if (isModalOpen === true) {toggleModal(false)}
+    if (isModalOpen !== false) {toggleModal(false)}
+   
     
   }
 
@@ -130,7 +135,7 @@ const useStyles = makeStyles((theme) => ({
 
 // desktop
 
- // Función de Login temporal. Modifica el estado del Provider desde el Consumer
+
  const LogIn = (Username, Password) => {
    
     AuthUser(Username, Password, (res, err) => {
@@ -138,25 +143,21 @@ const useStyles = makeStyles((theme) => ({
         console.log("que macana no loguea. AGREGAME UN ERROR DESPUES")
       }
       else {
-        if (res.status === 200 ) {
+        if (res.status === 200 ) { //ultimately el check de si el handshake fue efectivo o no
           handleMobileMenuClose()
-          
+          handleMenuClose()
+
           DecodeJWT(res.data.JWT, data => {
             
-            isLogged.dispatch({ type: "LOGIN", Username: data.data.Username, JWT: res.data.JWT})             
-          })
-          }
-         } 
-       
+            isLogged.dispatch({ type: "LOGIN", Username: data.data.Username, JWT: res.data.JWT})
+            
+           
+            
+          })  
+        }}    
     })
-    
-}
+  }
 
-const JWTLogIn = (JWT) => {
-
-
-
-}
 
 
 const LogOut = () => {
@@ -222,9 +223,7 @@ const cartContext = useContext(shoppingCartContext)
              isLogged.dispatch({ type: "LOGIN", Username: data.data.Username, JWT: j})   
              //ojo this needs to be improved.
              // also cuando le das logout no se vuelve a abrir el menu          
-          })
-          
-           
+          })    
         }
         }
 
@@ -333,7 +332,7 @@ const cartContext = useContext(shoppingCartContext)
               <React.Fragment>
                 <Button  className="login-button" onClick={handleModelToggler}> <AccountCircle />  
               </Button>
-              <Modal modalState={isModalOpen} handleModalToggler={handleModelToggler} LogIn={LogIn}  /> 
+              <Modal modalState={isModalOpen} handleModalToggler={handleModelToggler} LogIn={LogIn}  islogged={isLogged.state.isAuthenticated} /> 
              
              </React.Fragment>
           }

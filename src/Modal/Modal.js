@@ -5,7 +5,7 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
 import Button from '@material-ui/core/Button';
-import { GenerateJWT, DecodeJWT, ValidateJWT } from '../services/JWTservice'
+// import { GenerateJWT, DecodeJWT, ValidateJWT } from '../services/JWTservice'
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -45,7 +45,10 @@ const Fade = React.forwardRef(function Fade(props, ref) {
   );
 });
 
+
 let controller = true;
+
+console.log("modal mounted")
 
 Fade.propTypes = {
   children: PropTypes.element,
@@ -61,7 +64,7 @@ export default function SpringModal(props) {
   const [formState, changeState] = React.useState( {username : null, password : null})
   const [errorState, changeErrorState] = React.useState({formError: null})
   
-
+ 
 
   const handleUserNameChange = (event) => {
     changeState ( {
@@ -101,6 +104,7 @@ export default function SpringModal(props) {
 
     handleResetStates();
 
+    console.log("CLOSING DOWN")
     
 
   };
@@ -112,8 +116,7 @@ export default function SpringModal(props) {
 
   if (props.modalState === true && controller === true) {
     handleOpen()
-    
-      
+  
   }
 
   const debug = () => {
@@ -125,55 +128,26 @@ export default function SpringModal(props) {
     const Password = formState.password
 
     if (Username.trim().length > 3 || Password.trim.length > 3) {
-
-    //   const Claims = { Username, Password }
-    // const Header = { alg: "HS512" , typ: "JWT"}
-
-    // GenerateJWT(Header, Claims, null, res => {
-    //   if (res.status === 200 ) {
-        
-    //     let response = res.data
- 
-    //     if (typeof Storage !== "undefined") {localStorage.setItem("JWT", res.data)} //loads on localstorage, si el navegador lo soporta.
       
-
-    //     DecodeJWT(response, data => {
-
-    //       props.changeResponse({ resp : response, data: data.data})
-    
-    //       if (res.status === 200) {
-    //         handleClose() 
-         
-
-    //         props.LogIn(res, data.data.UserName)
-    //       }
-    //     })
-
-
-  
-      // } else {
-      //    props.changeResponse("error")
-      //   console.log("error")
-      // }
-    
       props.LogIn(Username, Password)
+      controller = true // esta linea lo hace funcionar.. pero no es lo mejor porque hace que se abra el modal ni bien se desloguea uno.
+      //consderar arreglar later on.
+      
       
 
     }
-    // )
-
-  // }
+    
 
    
 
     else  {
       handleErrors("Ingrese nombre de usuario y contraseña")
-    }
-
-    
- 
+    }  
   }
 
+ 
+
+ 
 
   return (
     

@@ -1,4 +1,4 @@
-import React , {useState} from 'react';
+import React , {useState, useEffect} from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -14,10 +14,7 @@ import Header from './Header/Header.js'
 import Footer from './Footer/Footer.js'
 import LinkBar from './Header/LinkBar.js'
 import Shop from './Shop/Shop'
-import {AuthUser} from "./services/Authservice"
-
-
-//https://www.freecodecamp.org/news/state-management-with-react-hooks/
+// import {AuthUser} from "./services/Authservice"
 
 
 export const AuthContext = React.createContext()
@@ -35,6 +32,11 @@ const reducer = (state, action) => {
     case "LOGIN": {
          
       localStorage.setItem("JWT", action.JWT)
+  
+      // if (localStorage.getItem("Shopping Cart")) {localStorage.removeItem("Shopping Cart")}
+      // OJO, TENERLO ACA IMPLICA QUE UNA VEZ TE LOGUEAS PERDES EL CARRITO PARA SIEMPRE. FALTARÍA METERLO
+      // EL CONTENIDO EN EL USUARIO
+
         return {
                 ...state, isAuthenticated: true, user: action.userName
                }             
@@ -48,10 +50,7 @@ const reducer = (state, action) => {
       default: return state
   }
 
-
-
 }
-
 
 
 const shoppingCartReducer = (state2, action2) => {
@@ -96,7 +95,7 @@ const shoppingCartReducer = (state2, action2) => {
           let removePrice = state2.shoppingList[index].price * state2.shoppingList[index].cantidad
           state2.total -= removePrice
 
-          console.log(action2.info.cantidad)
+          
           if (action2.info.cantidad ===  0) {
             console.log("2www")
             state2.shoppingList.splice([index], 1)
@@ -115,6 +114,7 @@ const shoppingCartReducer = (state2, action2) => {
         
         if (newProduct2 === true && action2.info.cantidad === 0 )  {
           return {...state2}
+          
         }
 
       if (newProduct2 === true  )  {
@@ -147,17 +147,27 @@ const shoppingCartReducer = (state2, action2) => {
           }}
           return { ...state2}
 
-        
-   
-      
-       
+      case "LOAD": 
+      state2.shoppingList = action2.loadedShoppingList
+      console.log(state2.shoppingList)
+      let pricetotal = 0
+      for (let index = 0; index < state2.shoppingList.length; index++) {
+        pricetotal += state2.shoppingList[index].price * state2.shoppingList[index].cantidad 
+      }
+      state2.total = pricetotal
 
+      return {...state2}
+
+      case "TEST": {
+        console.log("test")
+        
+      }
+
+    
     default: console.log("default")
     return {...state2}
   }}
-
-
-
+  
 
 //El hook propiamente dicho. Devuelve el estado, y dispatch. Dispatch es la función para llamar a las acciones en el reductor.
 
@@ -178,22 +188,47 @@ const App = () => {
     let searchBar = document.getElementById("searchBarInput")
     searchBar.value = ""
   }
- 
+
+  // const cartContext = useContext(shoppingCartContext)
+
+  useEffect(( ) => {
+
+    //CAREFUL. SIEMPRE SIEMPRE EN LOGIN, DEBE BORRARSE EL LOCALSTORAGE DEL CARRITO Y PASARLO AL CARRITO DEL USER.
+      //ALSO CAREFUL, PARA HACER ESTO PROPERLY DEBERIA COMPROBAR QUE EN LA DB ESTÉN LOS OBJETOS CON LA ID Y STOCK POSITIVO
+       // PARA EVITAR QUE ALGUIEN SE LOGUEE MIL AÑOS DESPUÉS EN UNA PC QUE TENGA EN EL LOCAL STORAGE UNA PRENDA QUE YA SE ACABÓ 
+    if ( localStorage.getItem("Shopping Cart") !== null ) {
+        dispatch2({
+        type: "LOAD",
+        loadedShoppingList: JSON.parse(localStorage.getItem("Shopping Cart"))
+      })
+      
+    }
+    else { console.log( "no hay carrito")}
+    
+  }, [])
+
+  
+  useEffect(( ) => { //El que guarda el carrito en el state.
+   // if (!state.isAuthenticated) {
+      localStorage.setItem("Shopping Cart", JSON.stringify(state2.shoppingList))
+   // }
+    }, [state, state2])
+    //Cada vez que alguien se loguee/desloguee o el carrito cambie, shoot this.
+
   return (
     
     
     <AuthContext.Provider
     value = {{ state, dispatch } /*El default, switch corre hasta return state */}
-    
     > 
 
     <shoppingCartContext.Provider 
     value = {{state2, dispatch2}}
-    >
+   >
     
 
-      <Router>
-           <Header handleSearchBarState={handleSearchBarState}  clearSearchBar={handleCleanSearchBar}/>
+      <Router >
+           <Header handleSearchBarState={handleSearchBarState}  clearSearchBar={handleCleanSearchBar}  />
            <LinkBar />
            
         <Switch>
