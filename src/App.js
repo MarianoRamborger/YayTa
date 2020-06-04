@@ -38,10 +38,12 @@ const reducer = (state, action) => {
       // EL CONTENIDO EN EL USUARIO
 
         return {
-                ...state, isAuthenticated: true, user: action.userName
+                ...state, isAuthenticated: true, user: action.email
                }             
       }
     
+  
+
     case "LOGOUT": {
       
       localStorage.removeItem("JWT") ; localStorage.removeItem("userName")
@@ -160,7 +162,7 @@ const shoppingCartReducer = (state2, action2) => {
 
       case "TEST": {
         console.log("test")
-        
+        break
       }
 
     

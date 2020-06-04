@@ -13,6 +13,7 @@ export const GenerateJWT = (header, claims, key, cb) => {
 
 
 export const DecodeJWT = (sJWS, cb) => {
+
   Axios.post("/api/DecodeJWT", {
     sJWS
   })
@@ -20,16 +21,24 @@ export const DecodeJWT = (sJWS, cb) => {
     cb(res);
   })
   .catch(function(err) {
-    console.log(err);
+    console.log(`El error es ${err}`);
   });
 };
 
-export const ValidateJWT = (header, token, key, cb) => {
+export const ValidateJWT = (j, cb) => {
+  
+  
+
+  let JWT = j
+
   Axios.post("api/ValidateJWT", {
-      header, token, key
+      JWT
   })
-  .then = (function(res) {
-      cb(res)
-  })
-  .catch = (function(err) { console.log(err)})
+  .then((res) => {
+    cb(res)
+  },
+  (err) => {
+    cb(err)
+  }  )
+  .catch ((err) => { console.log("MUMUMUUU")}) 
 };

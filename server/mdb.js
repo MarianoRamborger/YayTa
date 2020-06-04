@@ -4,36 +4,52 @@ const client = new MongoClient(uri, {  useNewUrlParser: true, useUnifiedTopology
 
 
 
-async function main(){
+{
+// async function main(){
   
-    try {
-        // Connect to the MongoDB cluster
-        await client.connect(); //awaits a conectarse..
+//     try {
+//         // Connect to the MongoDB cluster
+//         await client.connect(); //awaits a conectarse..
 
-        // Make the appropriate DB calls
+//         // Make the appropriate DB calls
 
-        // Create a single new listing //
+//         // Create a single new listing //
      
-    }
+//     }
         
     
-    finally {
-            // Close the connection to the MongoDB cluster
-            await client.close();
-        }
-    }
+//     finally {
+//             // Close the connection to the MongoDB cluster
+//             await client.close();
+//         }
+//     }
 
-    main().catch(console.error);
+//     main().catch(console.error);
+}
 
 
 
-    
 
 // Here starts my code.
 
 
 //CRUD : CREATE
     
+// CREATE USER
+
+const createUser = async (req) => {
+
+    try {
+    const {error} = validate(req);
+
+    if (error) {return error}
+
+}
+    catch (err) { return err }
+
+}
+
+
 
 //Create new Document
     
@@ -219,7 +235,7 @@ const closeConnection = async (client) => {
 
 
   module.exports = {
-      main ,
+    //   main ,
     //  listDatabases, 
      createManyDocuments,
      createDocument,
@@ -229,9 +245,102 @@ const closeConnection = async (client) => {
      updateByName,
      updateAllDocumentsWithThisPropertyType,
      deleteOne,
-     
+     createUser,
     }
   
   
 
  //https://developer.mongodb.com/quickstart/node-crud-tutorial#node-tutorial-read
+
+
+ // ACA SIGUE LO DEPRECATED:
+
+ 
+// app.post("/api/items/createitem", async (req, res) => {
+
+//     try {
+//       Main.createDocument (
+//         { name: "Cozy",  summary: "A new summary", bedrooms: 1, bathrooms: 1 }) ; return res.status(200).send()  }
+//     catch(err) { return res.status(500).send();
+//    } } )
+  
+//   app.post("/api/items/createmany", async (req, res) => {
+//     try {
+//       Main.createManyDocuments( [{
+//         name: "Infinite Views", summary: "Modern home with infinite views from the infinity pool", property_type: "House", bedrooms: 5, bathrooms: 4.5, beds: 5 },
+//         {    name: "Private room in London", property_type: "Apartment", bedrooms: 1, bathroom: 1},
+//     ])
+//       res.status(200).send()
+//     }
+//     catch {res.status(500).send()}
+//   })
+  
+//   app.get("/api/dbstatus", async (req, res) => {
+//     try { Main.getStatus(); res.status(200).send() } catch { res.status(500).send()} 
+    
+//   })
+  
+//   app.get("/api/items/findone", async (req, res) => {
+//     let { targetDb, targetCollection, name } = req.body
+  
+//     try {
+//       Main.findOne(targetDb, targetCollection, name) ; res.status(200).send()
+//     }
+//      catch { res.status(404).send()}
+//   })
+  
+//   app.get("/api/items/findmany", async (req, res) => {
+//     let { targetDb, targetCollection, targetDoc } = req.body
+  
+//     try {
+//       Main.findMany(targetDb, targetCollection, targetDoc) ; res.status(200).send()
+//     }
+//      catch { res.status(500).send()}
+//   })
+  
+//   app.put("/api/items/update" , async (req, res) => {
+//     let {targetDb, targetCollection, name, update} = req.body
+  
+//     try { Main.updateByName
+//       (targetDb, targetCollection, name, update)  ; res.status(200).send()}
+  
+//     catch {res.status(500).send()}
+  
+//   })
+  
+//   app.put("/api/items/updateallwithproperty", async (req, res) => {
+//     let {targetDb, targetCollection, targetProperty, update} = req.body
+  
+//     try { Main.updateAllDocumentsWithThisPropertyType(targetDb, targetCollection, targetProperty, update) ; res.status(200).send() }
+//     catch {res.status(500).send()}
+//   })
+  
+//   app.delete("/api/items/deleteone", async (req, res) => {
+//     const {targetDb, targetCollection, name} = req.body
+  
+//     try {
+//       Main.deleteOne(targetDb, targetCollection, name) ; res.status(200).send() ;
+//     }
+//     catch { res.status(500).send()}
+  
+//   })
+  
+  
+//   app.post("/api/createuser", async (req, res) => {
+  
+//     const { error } = validate(req.body);
+//     if (error) {
+//         return res.status(400).send(error.details[0].message);
+//     }
+  
+//     let user = await User.findOne({email: req.body.email});
+  
+//       if (user) {
+//         return status(400).send("User already exists")
+//       }
+    
+//       else {
+//         user = new User ({name: req.body.name , email: req.body.email , password : req.body.password })
+//         await user.save() ; res.send(user)
+//       }
+//   })

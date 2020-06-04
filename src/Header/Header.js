@@ -22,7 +22,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { 
  // GenerateJWT, 
-  DecodeJWT 
+  DecodeJWT, ValidateJWT 
   //,ValidateJWT 
         } from '../services/JWTservice'
 
@@ -147,13 +147,12 @@ const useStyles = makeStyles((theme) => ({
           handleMobileMenuClose()
           handleMenuClose()
 
-          DecodeJWT(res.data.JWT, data => {
-            
-            isLogged.dispatch({ type: "LOGIN", Username: data.data.Username, JWT: res.data.JWT})
+    
+            isLogged.dispatch({ type: "LOGIN", email: Username, JWT: res.data.JWT})
             
            
             
-          })  
+            
         }}    
     })
   }
@@ -216,21 +215,20 @@ const cartContext = useContext(shoppingCartContext)
     if (!isLogged.state.isAuthenticated && typeof Storage !== "undefined" && localStorage.getItem("JWT") !== null) {
         console.log("hooking why dos veces? revisar")
 
-
            let j = localStorage.getItem("JWT")
-           DecodeJWT(j, data => { 
-             console.log(data)
-             isLogged.dispatch({ type: "LOGIN", Username: data.data.Username, JWT: j})   
-             //ojo this needs to be improved.
-             // also cuando le das logout no se vuelve a abrir el menu          
-          })    
+      
+           ValidateJWT(j, data => {
+             if (data.data == "ERROR") { localStorage.removeItem("JWT")  }
+             else {
+              isLogged.dispatch({ type: "LOGIN", Email: data.data, JWT: j})
+             } 
+           })  
+
+        
         }
         }
 
       
-      
-      
-    
     ) //lista de dependencias. UseEffect solo va a shootear si los estados listados acá cambianesto cambia.
 
   
