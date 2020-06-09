@@ -20,6 +20,18 @@ router.get('/users/read', async (req, res) => {
   }
 });
 
+
+router.get('/users/findone', async (req, res) => {
+    const user = await User.find({email: req.body.email});
+  
+    try {
+      res.send(user);
+    } catch (err) {
+      res.status(500).send(err);
+    }
+  });
+
+
 // CREATE USER
 
 router.post('/users/create', async (req, res) => {
@@ -139,7 +151,7 @@ router.delete('/users/delete', async (req, res) => {
         return res.status(400).send('Wrong Password')
     } 
     else {
-          const result = await User.deleteOne({_id: user.id}) //atenti al lo-dash
+          const result = await User.deleteOne({_id: user.id}) //atenti al lo-dash   https://vegibit.com/mongoose-crud-tutorial/#mongodb-schemas
           console.log(result)
           return res.status(200).send("Usuario eliminado de manera exitosa")
     }

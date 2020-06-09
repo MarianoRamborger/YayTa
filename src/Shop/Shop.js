@@ -1,56 +1,71 @@
-import React , {useContext} from 'react'
+import React , { useState, useContext, useEffect} from 'react'
 import Card from './Card/Card'
-import DB from './DB.json'
 import Message from '../Message/Message'
 import {shoppingCartContext} from '../App'
+import getDB from '../services/DbService'
+
 
 // Fake DB
 
- // METER ACA EL CHECK DE CONTEXTO DE LA APP PARA PODER PASAR LA CANTIDAD COMO PROPS A LA CARD
  
-
-
- 
-    
 const HomeShop = (props) => {
+    
+    const [DB, updateDB] = useState(["Loading"])
+
+    const DBfetch = async () => {
+
+        let x = await getDB()
+        if (x === undefined) { x = []}
+        else {
+        updateDB(await getDB())
+    }
+   }
+
     let cardCount = props.reset
 
     const shopList = useContext(shoppingCartContext)
    
-    
+    useEffect(( ) => {   
+            
+     DBfetch()
+ 
+       }, [])
+
     return (
         
-
         <div >
         <p className="centered shop-title" > {props.title} </p>
-
            
+          
+
              <div className="shopDiv">
-            {
-                
-                
+            {     
+
+              
+
                 DB.map(data => {
                      
+                    if (DB[0] === "Loading") { return <Message key = "loadingmsg" message={"Cargando..."}/>}
 
-                    if (props.search !== '') {
+                    else if (props.search !== '') {
                         
-                        if (data.title.toLowerCase().startsWith(props.search.toLowerCase())) {
+                        if (data.name.toLowerCase().startsWith(props.search.toLowerCase())) {
                            
-                           if (data.oferta  === props.target || data.type === props.target )  { 
+                           if (data.onSale  === props.target || data.type === props.target )  { 
                             let cantidad = 0
                             cardCount++
                             return <Card 
-                                key = {data.id}
-                                productId = {data.id}
-                                title = {data.title}
-                                image = {data.image}
+                                key = {data._id}
+                                productId = {data._id}
+                                name = {data.name}
+                                picture = {data.picture}
                                 price = {data.price}
                                 desc = {data.desc}
                                 stock = {data.stock}
 
                                 {...shopList.state2.shoppingList.map(Qdata => {
 
-                                    if (Qdata.productId === data.id) {
+                                    if (Qdata.productId === data._id) {
                                         cantidad = Qdata.cantidad
                                         return null
                                     
@@ -72,14 +87,14 @@ const HomeShop = (props) => {
 
               
                     else { 
-                        if (data.oferta  === props.target || data.type === props.target )  { 
+                        if (data.onSale  === props.target || data.type === props.target )  { 
                             cardCount++
                             let cantidad = 0
                         return <Card 
-                        key = {data.id}
-                        productId = {data.id}
-                        title = {data.title}
-                        image = {data.image}
+                        key = {data._id}
+                        productId = {data._id}
+                        name = {data.name}
+                        picture = {data.picture}
                         price = {data.price}
                         desc = {data.desc}
                         stock = {data.stock}
@@ -88,7 +103,7 @@ const HomeShop = (props) => {
 
                         {...shopList.state2.shoppingList.map(Qdata => {
 
-                            if (Qdata.productId === data.id) {
+                            if (Qdata.productId === data._id) {
                                 cantidad = Qdata.cantidad
                                 return null
                               
@@ -113,7 +128,7 @@ const HomeShop = (props) => {
                 
                 }
 
-                {   cardCount  === 0 ? <Message message={"Lo sentimos. No hemos encontrado productos con ese nombre."}/> : null } 
+                {   cardCount  === 0 && DB[0] != "Loading" ? <Message message={"Lo sentimos. No hemos encontrado productos con ese nombre."}/> : null } 
                 
 
 

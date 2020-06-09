@@ -78,7 +78,7 @@ const onChangeHandler = (event) => {
       <CardActionArea className="card-area">
         <CardMedia 
           className={`${classes.media} card-image`}
-          image = {props.image} style={
+          image = {props.picture} style={
             { width: "20% !important", height: "400px"
             }}
                                                         
@@ -88,7 +88,7 @@ const onChangeHandler = (event) => {
          
         <CardContent className="card-content">
           <Typography gutterBottom variant="h5" component="h2" className="card-title" >
-            {props.title}
+            {props.name}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
             ${props.price}

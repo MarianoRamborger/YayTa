@@ -23,7 +23,7 @@ const HomeShop = () => {
                     key = {data.id}
                     productId = {data.id}
                     title = {data.title}
-                    image = {data.image}
+                    picture = {data.picture}
                     price = {data.price}
                     desc = {data.desc}
                     

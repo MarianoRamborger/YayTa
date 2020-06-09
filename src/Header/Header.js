@@ -2,13 +2,14 @@ import React, {useContext, useState, useEffect} from 'react'; //Vital para usar 
 import { fade, makeStyles } from '@material-ui/core/styles';
 import { AuthContext } from '../App';
 import { AuthUser} from '../services/Authservice'
-
+import { useBeforeunload } from 'react-beforeunload'
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 
+import {upCart , downCart} from '../services/CartService'
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import SearchIcon from '@material-ui/icons/Search';
@@ -147,8 +148,42 @@ const useStyles = makeStyles((theme) => ({
           handleMobileMenuClose()
           handleMenuClose()
 
-    
-            isLogged.dispatch({ type: "LOGIN", email: Username, JWT: res.data.JWT})
+            
+          //Shooping Cart (si hay) se compara con la cloud y se loadea en el carrito. Then se elimina el localstorage carrito.
+        
+
+            if (cartContext.state2.shoppingList.length > 0) {
+              if (typeof Storage !== "undefined" && localStorage.getItem("Shopping Cart") !== null)
+              {
+                upCart(Username, cartContext.state2.shoppingList, (res, err) => {
+                  
+                  
+                  // localStorage.removeItem("Shopping Cart")
+                  cartContext.dispatch2({
+                    type: "LOAD", loadedShoppingList: res.data
+                    
+                  })
+                })
+  // localStorage.removeItem("Shopping Cart")
+
+           
+            }         }
+
+            else if (typeof Storage !== "undefined") { 
+              if (localStorage.getItem("Shopping Cart") === null || localStorage.getItem("Shopping Cart") === "[]")  { 
+                if (cartContext.state2.shoppingList.length === 0) {
+              downCart(Username, (res, err) => {
+                cartContext.dispatch2({
+                  type: "LOAD", loadedShoppingList: res.data
+                })
+              })
+            }
+          }
+          }
+           
+
+          
+            isLogged.dispatch({ type: "LOGIN", user: Username, JWT: res.data.JWT})
             
            
             
@@ -162,10 +197,16 @@ const useStyles = makeStyles((theme) => ({
 const LogOut = () => {
   handleMenuClose()
   handleMobileMenuClose()
+
+  upCart(isLogged.state.user, cartContext.state2.shoppingList)
+
   isLogged.dispatch({
-  type: "LOGOUT"
-  
-})}
+  type: "LOGOUT" 
+})
+  cartContext.dispatch2({
+    type: "EMPTY"
+  })
+}
 
 const isLogged = useContext(AuthContext) /* CONTEXT */
 
@@ -220,7 +261,13 @@ const cartContext = useContext(shoppingCartContext)
            ValidateJWT(j, data => {
              if (data.data == "ERROR") { localStorage.removeItem("JWT")  }
              else {
-              isLogged.dispatch({ type: "LOGIN", Email: data.data, JWT: j})
+             
+              isLogged.dispatch({ type: "LOGIN", user: JSON.parse(data.data), JWT: j})
+              downCart(JSON.parse(data.data), (res, err) => {
+                cartContext.dispatch2({
+                  type: "LOAD", loadedShoppingList: res.data
+                })
+              })
              } 
            })  
 
@@ -230,8 +277,17 @@ const cartContext = useContext(shoppingCartContext)
 
       
     ) //lista de dependencias. UseEffect solo va a shootear si los estados listados acá cambianesto cambia.
+ 
+    useBeforeunload(() =>  {
 
+      if (isLogged.state.isAuthenticated )  { upCart(isLogged.state.user, cartContext.state2.shoppingList) }
+    }
+      
   
+      );
+
+
+
   return (
 
 

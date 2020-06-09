@@ -38,7 +38,7 @@ const reducer = (state, action) => {
       // EL CONTENIDO EN EL USUARIO
 
         return {
-                ...state, isAuthenticated: true, user: action.email
+                ...state, isAuthenticated: true, user: action.user
                }             
       }
     
@@ -46,7 +46,7 @@ const reducer = (state, action) => {
 
     case "LOGOUT": {
       
-      localStorage.removeItem("JWT") ; localStorage.removeItem("userName")
+      localStorage.removeItem("JWT") ; localStorage.removeItem("userName") ; localStorage.removeItem("Shopping Cart")
       return { ...state, isAuthenticated: false, user: null
       }}
       default: return state
@@ -96,8 +96,7 @@ const shoppingCartReducer = (state2, action2) => {
           newProduct2 = false    
           let removePrice = state2.shoppingList[index].price * state2.shoppingList[index].cantidad
           state2.total -= removePrice
-
-          
+         
           if (action2.info.cantidad ===  0) {
             console.log("2www")
             state2.shoppingList.splice([index], 1)
@@ -115,8 +114,7 @@ const shoppingCartReducer = (state2, action2) => {
         }}
         
         if (newProduct2 === true && action2.info.cantidad === 0 )  {
-          return {...state2}
-          
+          return {...state2}      
         }
 
       if (newProduct2 === true  )  {
@@ -126,9 +124,7 @@ const shoppingCartReducer = (state2, action2) => {
   
 
        break
-
-
-      
+ 
       case "REMOVE":
 
         for (let index = 0; index < state2.shoppingList.length; index++) {
@@ -160,11 +156,19 @@ const shoppingCartReducer = (state2, action2) => {
 
       return {...state2}
 
+      case "EMPTY": {
+        state2.shoppingList = []
+        state2.total = 0
+        return {...state2}
+      }
+
       case "TEST": {
-        console.log("test")
+        console.log("TEST")
         break
       }
 
+
+   
     
     default: console.log("default")
     return {...state2}
@@ -209,7 +213,14 @@ const App = () => {
     
   }, [])
 
-  
+
+  // ELIMINATE THIS CONSOLE.LOG
+  const saveme = () => {
+    console.log(state2.shoppingList)
+  }
+
+
+
   useEffect(( ) => { //El que guarda el carrito en el state.
    // if (!state.isAuthenticated) {
       localStorage.setItem("Shopping Cart", JSON.stringify(state2.shoppingList))
@@ -232,6 +243,8 @@ const App = () => {
       <Router >
            <Header handleSearchBarState={handleSearchBarState}  clearSearchBar={handleCleanSearchBar}  />
            <LinkBar />
+          
+           <button onClick={saveme}> ESTADO </button>
            
         <Switch>
 

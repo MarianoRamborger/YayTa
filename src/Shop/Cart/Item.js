@@ -80,7 +80,7 @@ export default function MediaControlCard(props) {
       <div className={classes.details}>
         <CardContent className={classes.content}>
           <Typography component="h5" variant="h5">
-            {`${props.props.title}`}
+            {`${props.props.name}`}
           </Typography>
           <Typography variant="subtitle1" color="textSecondary">
             {`$ ${props.props.price}. Cantidad: ${props.props.cantidad}`}
@@ -101,8 +101,8 @@ export default function MediaControlCard(props) {
       </div>
       <CardMedia 
         className={`shopping-cart-item-image ${classes.cover}`}
-        image={`${props.props.image}`}
-        title={`${props.props.title}`}
+        image={`${props.props.picture}`}
+        name={`${props.props.name}`}
       />
     </Card>
   );

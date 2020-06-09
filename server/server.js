@@ -4,6 +4,8 @@ const { GenerateJWT, DecodeJWT, ValidateJWT } = require("./dec-enc.js"); //impor
 const Users = require('./tempDB.js')
 const app = express();
 const routes = require('./Routes/routes.js')
+const pRoutes = require('./Routes/p-routes.js') ;
+const cRoutes = require('./Routes/c-routes')
 const Main = require("./mdb")
 const { MongoClient } = require('mongodb');
 // const uri = "mongodb+srv://yayta:mocasin1@cluster0-gyc6q.gcp.mongodb.net/test?retryWrites=true&w=majority";
@@ -82,7 +84,8 @@ app.post("/api/ValidateJWT", (req, res) => {
  
 
 app.use('/api', routes)
-
+app.use('/api', pRoutes)
+app.use('/api', cRoutes)
 
 
 
