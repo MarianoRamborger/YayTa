@@ -1,5 +1,7 @@
 import React, {useContext} from 'react';
 import {shoppingCartContext} from '../../App'
+import { AuthContext } from '../../App';
+import {checkout} from '../../services/CartService'
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
@@ -12,6 +14,8 @@ import Item from './Item'
 import CloseIcon from '@material-ui/icons/Close';
 import { IconButton } from '@material-ui/core';
 import Button from '@material-ui/core/Button'
+
+
 
 
 const useStyles = makeStyles({
@@ -27,6 +31,8 @@ const useStyles = makeStyles({
 
 
 
+
+
 export default function SwipeableTemporaryDrawer() {
   const classes = useStyles();
   const [state, setState] = React.useState({
@@ -34,6 +40,20 @@ export default function SwipeableTemporaryDrawer() {
   });
 
   const shopList = useContext(shoppingCartContext)
+  const auth = useContext(AuthContext)
+
+
+  const handleCheckout  = () => {
+    checkout(auth.state.user, shopList.state2.shoppingList, (res, err) => {
+                    
+                     
+   })
+  }
+  
+
+   
+  
+
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -84,7 +104,7 @@ export default function SwipeableTemporaryDrawer() {
       </ListItem>
 
       <ListItem >
-        <Button disabled={true} color="primary">  Check-out (backend pendiente) </Button>
+        <Button  color="primary" onClick={handleCheckout}>  Check-out  </Button>
       </ListItem>
     
       </List>
@@ -108,6 +128,8 @@ export default function SwipeableTemporaryDrawer() {
           </SwipeableDrawer>
         </React.Fragment>
       ))}
+      
+
       
     </div>
   );

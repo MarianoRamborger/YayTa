@@ -61,8 +61,8 @@ Fade.propTypes = {
 export default function SpringModal(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const [formState, changeState] = React.useState( {username : null, password : null})
-  const [errorState, changeErrorState] = React.useState({formError: null})
+  const [formState, changeState] = React.useState( {username : "", password : ""})
+  const [registerFormState, changeRegisterState] = React.useState( {name: "", username : "", password : ""})
   
  
 
@@ -80,11 +80,33 @@ export default function SpringModal(props) {
     })
    
   }
+  const handleRegisterNameChange = (event) => {
+    changeRegisterState ( {
+      name: event.target.value,
+      username : registerFormState.username,
+      password : registerFormState.password,
+    }) 
+  }
+  const handleRegisterUsernameChange = (event) => {
+    changeRegisterState ( {
+      name: registerFormState.name,
+      username : event.target.value,
+      password : registerFormState.password,
+    }) 
+  }
+  const handleRegisterPasswordChange = (event) => {
+    changeRegisterState ( {
+      name: registerFormState.name,
+      username : registerFormState.username,
+      password : event.target.value,
+    }) 
+  }
+
 
   const handleResetStates = () => {
 
     changeState ({ username : null, password : null})
-    changeErrorState ({formError : null})
+
 
   }
 
@@ -103,15 +125,13 @@ export default function SpringModal(props) {
     controller = true;
 
     handleResetStates();
+    props.handleErrorMsg("")
 
     console.log("CLOSING DOWN")
     
 
   };
 
-  const handleErrors = (error) => {
-    changeErrorState({ formError :  error })
-  }
 
 
   if (props.modalState === true && controller === true) {
@@ -119,40 +139,46 @@ export default function SpringModal(props) {
   
   }
 
-  const debug = () => {
-    console.log(props.callResponse)
-  }
-
   const handshake =  async () => {
     const Username = formState.username
     const Password = formState.password
 
-    if (Username.trim().length > 3 || Password.trim.length > 3) {
+    if (Username.trim().length > 4 && Password.trim().length > 3) {
       
       props.LogIn(Username, Password)
       controller = true // esta linea lo hace funcionar.. pero no es lo mejor porque hace que se abra el modal ni bien se desloguea uno.
       //consderar arreglar later on.
-      
-      
 
     }
-    
-
-   
 
     else  {
-      handleErrors("Ingrese nombre de usuario y contraseña")
+      props.handleErrorMsg("Ingrese nombre de usuario y contraseña válidos")
     }  
   }
 
+  const register =  async () => {
+    const Name = registerFormState.name
+    const Username = registerFormState.username
+    const Password = registerFormState.password
  
+    if (Name.trim().length > 3 || Username.trim().length > 4 || Password.trim().length > 5) {
 
+      props.Register(Name, Username, Password)
+      controller = true
+    }
+    else  {
+      props.handleErrorMsg("Todos los campos deben poseer al menos cuatro caracteres.")
+    }
+  
+  }
+  
+
+  
  
+ if (props.logMode === true) {
 
   return (
-    
-    
-    
+  
     <div>
   
       <Modal
@@ -170,20 +196,65 @@ export default function SpringModal(props) {
         <Fade in={open}>
           <div className={classes.paper}>
             <h2 id="spring-modal-title"> Login </h2>
-            <p id="spring-modal-description"> Back-end en proceso. Probar user user.</p>
+          
+            <p id="spring-modal-description"> Por favor, ingrese su email y contraseña </p>
             <form className="modal-form">
               
-              <input className="modal-input"  type="text" name="user" placeholder="user" onChange={handleUserNameChange} />
-              <input className="modal-input" type="text"  name="password" placeholder="user" onChange={handlePasswordChange}/>
+              <input className="modal-input"  type="text" name="user" placeholder="Email" onChange={handleUserNameChange} />
+              <input className="modal-input" type="text"  name="password" placeholder="Contraseña" onChange={handlePasswordChange}/>
+
               <Button className="modal-button" size="small" variant="contained" color="primary" onClick={handshake}> INGRESAR </Button>
-              <p className="form-error-text"> {errorState.formError} </p>
+              <Button className="modal-button" size="small" variant="contained" color="primary" onClick={props.handleLogMode}> Registrate </Button>
+              <p className="form-error-text"> {props.error} </p>
              
             </form>
-            <p className="register-prompt"> No tenes cuenta? registrate! </p>
-            <button onClick={debug}>DEBUG ME</button>
+            {/* <p className="register-prompt"> No tenes cuenta? registrate! </p> */}
           </div>
         </Fade>
       </Modal>
     </div>
   );
+}
+else {
+  return (<div>
+  
+ 
+  <Modal
+    aria-labelledby="spring-modal-title"
+    aria-describedby="spring-modal-description"
+    className={classes.modal}
+    open={open}
+    onClose={handleClose}
+    closeAfterTransition
+    BackdropComponent={Backdrop}
+    BackdropProps={{
+      timeout: 500,
+    }}
+  >
+    <Fade in={open}>
+      <div className={classes.paper}>
+        <h2 id="spring-modal-title"> Registro </h2>
+      
+        <p id="spring-modal-description"> Por favor, ingrese los datos solicitados </p>
+        <form className="modal-form">
+          
+          <input className="modal-input"  type="text" name="name" placeholder="Nombre" onChange={handleRegisterNameChange} />
+          <input className="modal-input"  type="text" name="user" placeholder="Email" onChange={handleRegisterUsernameChange} />
+          <input className="modal-input" type="text"  name="password" placeholder="Contraseña" onChange={handleRegisterPasswordChange}/>
+
+          <Button className="modal-button" size="small" variant="contained" color="primary" onClick={register}> Registrarme </Button>
+          <Button className="modal-button" size="small" variant="contained" color="primary" onClick={props.handleLogMode}> Atrás </Button>
+     
+          <p className="form-error-text"> {props.error} </p>
+         
+        </form>
+        {/* <p className="register-prompt"> No tenes cuenta? registrate! </p> */}
+      </div>
+    </Fade>
+  </Modal>
+</div>)
+
+}
+ 
+
 }

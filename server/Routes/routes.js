@@ -38,12 +38,8 @@ router.post('/users/create', async (req, res) => {
     // First Validate The Request
     const { error } = await validateUser(req.body);
     console.log(error)
-    
-   
-    try {
      
-    
- 
+    try {
     if (error) {
     
         return res.status(400).send();

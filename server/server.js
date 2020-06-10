@@ -8,6 +8,8 @@ const pRoutes = require('./Routes/p-routes.js') ;
 const cRoutes = require('./Routes/c-routes')
 const Main = require("./mdb")
 const { MongoClient } = require('mongodb');
+
+
 // const uri = "mongodb+srv://yayta:mocasin1@cluster0-gyc6q.gcp.mongodb.net/test?retryWrites=true&w=majority";
 // const client = new MongoClient(uri, {  useNewUrlParser: true, useUnifiedTopology: true })
 const mongoose = require('mongoose');
@@ -15,6 +17,8 @@ const mongoose = require('mongoose');
 
 app.use(express.json()) //middleware, parsea incoming requests con json payloads. Popula un objeto body en la request con la data parseada
 app.use(morgan("dev"))
+
+
 
 
 const port = process.env.PORT || 3100;
@@ -27,7 +31,6 @@ const port = process.env.PORT || 3100;
 
 
 app.get("/", (req, res) => res.send("Esto es la API."));
-
 
 
 //Para cada endpoint, se pasa data de la request. Todas las funciones devuelven un Javascript object, so pueden ser metidas en a json response
@@ -45,9 +48,6 @@ app.post("/api/ValidateJWT", (req, res) => {
     key = "$Clavesupersecreta05"; //idem top
     let validation = (ValidateJWT(JWT))
     res.json(validation)
-
-    
-
 
  })
 
@@ -88,10 +88,6 @@ app.use('/api', pRoutes)
 app.use('/api', cRoutes)
 
 
-
-
-
-
 app.get("/api/items/findone", async (req, res) => {
       let { targetDb, targetCollection, name } = req.body
     
@@ -105,6 +101,10 @@ app.get("/api/items/findone", async (req, res) => {
       try { Main.getStatus(); res.status(200).send() } catch { res.status(500).send()} 
       
     })
+
+
+
+
 
 
 app.listen(port, () => console.log(`Escuchando el puerto ${port}!`));

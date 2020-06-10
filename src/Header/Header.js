@@ -8,6 +8,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
+import {RegisterUser} from '../services/RegisterService'
+
 
 import {upCart , downCart} from '../services/CartService'
 import MenuItem from '@material-ui/core/MenuItem';
@@ -93,7 +95,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-  
+ 
+
   const PrimarySearchAppBar = (props) => {
 
 
@@ -102,11 +105,12 @@ const useStyles = makeStyles((theme) => ({
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const [isModalOpen, toggleModal] = useState(false)
   const [callResponse, changeResponse] = React.useState({ resp: null, data: null } )
-
-
-
+  const [errorMsg, setErrorMsg] = useState(null)
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const [logMode, swapLogMode] = React.useState(true)
+
+
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -128,11 +132,19 @@ const useStyles = makeStyles((theme) => ({
   const handleModelToggler = () => {
     if (isModalOpen === false)  { toggleModal(true) }
     if (isModalOpen !== false) {toggleModal(false)}
-   
-    
   }
 
+  const handleErrorMsg = (newError) => {
+    setErrorMsg(newError)
+  }
   
+  const handleLogMode = () => {
+    if (logMode) { swapLogMode(false)} ; if (!logMode) {swapLogMode(true)}
+    handleErrorMsg("")
+        let x = document.querySelectorAll('.modal-input')
+    for (let i = 0; i < x.length; i++) {x[i].value =""}
+  }
+
 
 // desktop
 
@@ -140,34 +152,28 @@ const useStyles = makeStyles((theme) => ({
  const LogIn = (Username, Password) => {
    
     AuthUser(Username, Password, (res, err) => {
-      if (err) {
-        console.log("que macana no loguea. AGREGAME UN ERROR DESPUES")
+      if (err || res.status === 400) {
+        handleErrorMsg("Usuario y/o contraseña incorrectos")
       }
       else {
         if (res.status === 200 ) { //ultimately el check de si el handshake fue efectivo o no
           handleMobileMenuClose()
-          handleMenuClose()
-
-            
+          handleMenuClose()     
           //Shooping Cart (si hay) se compara con la cloud y se loadea en el carrito. Then se elimina el localstorage carrito.
-        
-
             if (cartContext.state2.shoppingList.length > 0) {
               if (typeof Storage !== "undefined" && localStorage.getItem("Shopping Cart") !== null)
               {
                 upCart(Username, cartContext.state2.shoppingList, (res, err) => {
                   
                   
-                  // localStorage.removeItem("Shopping Cart")
+                   // localStorage.removeItem("Shopping Cart")
                   cartContext.dispatch2({
                     type: "LOAD", loadedShoppingList: res.data
                     
                   })
                 })
-  // localStorage.removeItem("Shopping Cart")
-
-           
-            }         }
+                     // localStorage.removeItem("Shopping Cart")  
+            }}
 
             else if (typeof Storage !== "undefined") { 
               if (localStorage.getItem("Shopping Cart") === null || localStorage.getItem("Shopping Cart") === "[]")  { 
@@ -180,17 +186,29 @@ const useStyles = makeStyles((theme) => ({
             }
           }
           }
-           
-
-          
-            isLogged.dispatch({ type: "LOGIN", user: Username, JWT: res.data.JWT})
-            
-           
-            
-            
+            isLogged.dispatch({ type: "LOGIN", user: Username, JWT: res.data.JWT})         
         }}    
     })
   }
+
+  const Register = (Name, Username, Password) => {
+   
+    RegisterUser(Name, Username, Password, (res, err) => {
+      if (err) {
+        handleErrorMsg("Todos los campos deben poseer al menos cuatro caracteres.")
+      }
+      else {
+        if (res.status === 200 ) { //ultimately el check de si el handshake fue efectivo o no
+          handleMobileMenuClose()
+          handleMenuClose() 
+          handleLogMode()
+          //function para pasar as prop y modificar el estado del modal para pasar a login    
+        
+        }
+      }
+    })
+  }
+
 
 
 
@@ -351,7 +369,9 @@ const cartContext = useContext(shoppingCartContext)
             <React.Fragment>
             <Button  className="login-button" onClick={handleModelToggler}> <AccountCircle />  
              </Button>
-             <Modal modalState={isModalOpen} handleModalToggler={handleModelToggler} LogIn={LogIn} changeResponse={changeResponse} callResponse={callResponse} /> 
+             <Modal modalState={isModalOpen} handleModalToggler={handleModelToggler} LogIn={LogIn} changeResponse={changeResponse} callResponse={callResponse} Register={Register} 
+               handleErrorMsg={handleErrorMsg} error={errorMsg} logMode={logMode} handleLogMode={handleLogMode}
+             /> 
              
              </React.Fragment>
           } 
@@ -386,7 +406,8 @@ const cartContext = useContext(shoppingCartContext)
               <React.Fragment>
                 <Button  className="login-button" onClick={handleModelToggler}> <AccountCircle />  
               </Button>
-              <Modal modalState={isModalOpen} handleModalToggler={handleModelToggler} LogIn={LogIn}  islogged={isLogged.state.isAuthenticated} /> 
+              <Modal modalState={isModalOpen} handleModalToggler={handleModelToggler} LogIn={LogIn}  islogged={isLogged.state.isAuthenticated} Register={Register} 
+              handleErrorMsg={handleErrorMsg} error={errorMsg} logMode={logMode} handleLogMode={handleLogMode} /> 
              
              </React.Fragment>
           }
