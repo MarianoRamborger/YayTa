@@ -244,7 +244,7 @@ const App = () => {
            <Header handleSearchBarState={handleSearchBarState}  clearSearchBar={handleCleanSearchBar}  />
            <LinkBar />
           
-           <button onClick={saveme}> ESTADO </button>
+  
            
         <Switch>
 
