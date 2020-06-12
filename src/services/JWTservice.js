@@ -1,7 +1,9 @@
 import Axios from "axios";
+import {SL} from './SL'
+
 
 export const GenerateJWT = (header, claims, key, cb) => {
-  Axios.post("/api/GenerateJWT", {
+  Axios.post(`${SL}/api/GenerateJWT`, {
       header, claims, key
   })
   .then(function(res) {
@@ -14,7 +16,7 @@ export const GenerateJWT = (header, claims, key, cb) => {
 
 export const DecodeJWT = (sJWS, cb) => {
 
-  Axios.post("/api/DecodeJWT", {
+  Axios.post(`${SL}/api/DecodeJWT`, {
     sJWS
   })
   .then(function(res) {
@@ -31,7 +33,7 @@ export const ValidateJWT = (j, cb) => {
 
   let JWT = j
 
-  Axios.post("api/ValidateJWT", {
+  Axios.post(`${SL}/api/ValidateJWT`, {
       JWT
   })
   .then((res) => {

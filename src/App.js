@@ -248,7 +248,7 @@ const App = () => {
            
         <Switch>
 
-          
+        
     
           <Route exact path="/">
             <Shop  title={"Ofertas"} target={true} search={searchBarState} reset={0}/>

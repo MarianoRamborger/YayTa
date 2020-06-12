@@ -383,7 +383,7 @@ const cartContext = useContext(shoppingCartContext)
         {/* Mobile Profile */}
           <div className={`${classes.sectionMobile} push`}>
           <IconButton
-              className ="shopping-cart-icon on"
+              className ="shopping-cart-icon "
               >
                 <Badge badgeContent={cartContext.state2.shoppingList.length} color="secondary"> <ShoppingCart/> </Badge>  
               {/* <ShoppingCart /> */}
@@ -397,7 +397,7 @@ const cartContext = useContext(shoppingCartContext)
                         aria-label="account of current user"
                         aria-controls="primary-search-account-menu"
                         aria-haspopup="true"
-                        className="account-circle"
+                        className="account-circle on"
                       >
                       <AccountCircle />
                     </IconButton>

@@ -98,13 +98,13 @@ export default function SwipeableTemporaryDrawer() {
     
       </List>
       <Divider />
-      <List >
+      <List className="checkout-list">
       <ListItem >
-      <h3> Total : ${shopList.state2.total} </h3>
+      <h3 className="shopping-cart-total"> Total : ${shopList.state2.total} </h3>
       </ListItem>
 
       <ListItem >
-        <Button  color="primary" onClick={handleCheckout}>  Check-out  </Button>
+        <Button  color="primary" onClick={handleCheckout} className="checkout-button">  Check-out  </Button>
       </ListItem>
     
       </List>

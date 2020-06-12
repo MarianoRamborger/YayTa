@@ -1,9 +1,11 @@
 import axios from "axios";
+import {SL} from './SL'
+
 
 export const upCart = async (user, cart, cb) => {
    
     try {
-        await axios.put('/api/cart/upload', {
+        await axios.put(`${SL}/api/cart/upload`, {
             user: user,
             cart: cart
         })
@@ -18,7 +20,7 @@ export const upCart = async (user, cart, cb) => {
 export const checkout = async (user, cart, cb) => {
     
     try {
-        await axios.post('/api/checkout', {
+        await axios.post(`${SL}/api/checkout`, {
             user: user,
             cart: cart
         })
@@ -34,7 +36,7 @@ export const checkout = async (user, cart, cb) => {
 
 export const downCart = async (user, cb ) => {
     console.log(user)
-    try { await axios.post('/api/cart/download', {
+    try { await axios.post(`${SL}/api/cart/download`, {
         user: user
     })
     .then(function(res) {

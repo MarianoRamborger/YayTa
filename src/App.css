@@ -103,7 +103,7 @@
 }
 
 
-#header-bar, .modal-button ,.link-bar  {
+#header-bar, .modal-button ,.link-bar, .checkout-button  {
   color: whitesmoke !important;
   background-color: white !important;
   background-image: linear-gradient(to right, rgba(157, 45, 108, 1), rgba(157, 45, 108, 0.7)) ;  /* #9d2d6c */
@@ -156,7 +156,7 @@
 
 
 
-.shopping-cart-icon , .mobile-dot-menu, .account-circle, .profile-menu-button{
+.shopping-cart-icon , .mobile-dot-menu, .account-circle {
   color: whitesmoke  !important;
 }
 
@@ -401,3 +401,20 @@ body {
 .on {
   color: #B4D477 !important
 }
+
+
+.profile-menu-button {
+  background-color: rgba(184,99,145, 0.15) !important;
+  font-weight: bold !important;
+  color: #5F1C68 !important
+}
+
+.profile-menu-button:hover {
+  background-color: rgba(184,99,145, 0.4) !important;
+  color: #5F1C68 !important
+}
+
+.cart-item-title , .shopping-cart-total {
+ color:#5F1C68 !important
+}
+

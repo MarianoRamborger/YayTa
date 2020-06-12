@@ -1,8 +1,10 @@
 import axios from "axios";
+import {SL} from './SL'
+
 
 export const AuthUser = (Email, Password, cb) => {
   axios
-    .post("/api/users/auth", {
+    .post(`${SL}/api/users/auth`, {
       email: Email,
       password: Password
     })

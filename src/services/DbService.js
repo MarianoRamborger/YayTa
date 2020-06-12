@@ -1,9 +1,10 @@
 import axios from "axios";
+import {SL} from './SL'
 
 export const getDB = async () => {
    
     try {
-        const res = await axios.get('/api/products/getall')
+        const res = await axios.get(`${SL}/api/products/getall`)
         
         return res.data
        
