@@ -1,8 +1,8 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
+// import Toolbar from '@material-ui/core/Toolbar';
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -23,11 +23,12 @@ export default function Footer() {
   return (
     <div className={`${classes.root} footer`} >
       <AppBar position="static" className="footer-app-bar">
-        <Toolbar id="footer-bar">
-          <Typography variant="h6" className={classes.title}>
-            Footer
-          </Typography>
-        </Toolbar>
+      <p className="footer-text">
+            Av. Sáenz 2159, Boulogne.       Telefono: 4763-5754
+            </p>
+        {/* <Toolbar id="footer-bar">
+        
+        </Toolbar> */}
       </AppBar>
     </div>
   );

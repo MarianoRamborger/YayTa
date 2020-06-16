@@ -4,11 +4,32 @@
 
 .footer {
   position: fixed ;
+  text-align: start;
   width: 100%;
-  margin-top: 15px;
   bottom: 0;
   left: 0;
 }
+
+.footer-app-bar{
+  max-height: 30px !important;
+  display: flex;
+  justify-items: flex-start;
+}
+
+.footer-app-bar {
+  background-color: white !important;
+  background-image: linear-gradient(to right, rgba(157, 45, 108, 1), rgba(157, 45, 108, 0.7)) ;  /* #9d2d6c */
+  color: whitesmoke;
+  text-align: center;
+  
+
+}
+
+.footer-text {
+  margin-top: 1px ;
+  margin-left: 1%
+}
+
 
 .centered {
   display: flex;
@@ -134,7 +155,6 @@
 #footer-bar {
   background-color: white !important;
   background-image: repeating-linear-gradient(to right, rgba(157, 45, 108, 1) 30%, rgba(157, 45, 108, 0.7) 15%);
-  height: 10px;
   margin-right: 0px;
   padding-right: 0px;
 }
@@ -280,7 +300,7 @@ body {
   font-size: 1em !important;
   background-color: transparent;
   margin: 3px !important;
-  padding: 4px! important;
+  padding: 0px 4px! important;
   border: none !important;
 
 }
@@ -369,10 +389,11 @@ body {
     margin-right: 2px !important;
   }
 
-  .footer, #footer-bar, .footer-app-bar { 
+  /* .footer, #footer-bar, .footer-app-bar { 
     visibility: hidden !important;
     display: none;
-  }
+
+  } */
 
   #searchBar {
     /* display: none;
@@ -425,7 +446,7 @@ body {
 .logo {
   max-width: 8%;
   margin-right:  10%;
-  padding-top: 1%;
+  padding-top: 0.2%;
   min-width: 70px;
 }
 
@@ -438,5 +459,10 @@ body {
     margin-left: 0px !important;
   }
 
-
 }
+
+#spring-modal-title , #spring-modal-description{
+  color:#5F1C68 !important
+}
+
+
