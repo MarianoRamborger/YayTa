@@ -9,6 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import {RegisterUser} from '../services/RegisterService'
+import Logo from '../Logo/lsf.png'
 
 
 import {upCart , downCart} from '../services/CartService'
@@ -337,11 +338,12 @@ const cartContext = useContext(shoppingCartContext)
           
 
           
-          <Typography  id="web-title" > 
-           Ya & Ta 
-          </Typography>
+          {/* <Typography  id="web-title" > 
+           YA & TA
+          </Typography> */}
+          <img className="logo" src={Logo} />
+    
 
-          
           <div  />
           <div className={`${classes.sectionDesktop} push`}  >
 

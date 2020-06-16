@@ -241,7 +241,7 @@ body {
 
   @font-face {
     font-family: Ayuma;
-    src: local(Pacifico-Regular), url('./fonts/Ayuma2yk.ttf')
+    src: local(Pacifico-Regular), url('./fonts/pcdanglestar.ttf')
 }
 
 
@@ -325,10 +325,6 @@ body {
 
 }
 
-
-
-
-
 .class-actions {
   display: flex;
   flex-direction: row;
@@ -379,13 +375,21 @@ body {
   }
 
   #searchBar {
-    display: none;
-    visibility: hidden
+    /* display: none;
+    visibility: hidden */
+    order: 5;
+    margin-left: 15px
+  }
+
+  .shopping-cart-icon , .mobile-dot-menu, .account-circle{
+    padding: 0 !important;
+    margin: 0 !important;
   }
 
   .pull { 
-    visibility: hidden;
+    /* visibility: hidden; */
     margin-right: 0px;
+    order: 6
   }
 
   #header-bar {
@@ -418,3 +422,21 @@ body {
  color:#5F1C68 !important
 }
 
+.logo {
+  max-width: 8%;
+  margin-right:  10%;
+  padding-top: 1%;
+  min-width: 70px;
+}
+
+@media only screen and (max-width: 800px) { 
+
+  .logo {
+    max-width: 8%;
+    min-width: 70px;
+    margin-right: 0px !important;
+    margin-left: 0px !important;
+  }
+
+
+}
