@@ -128,7 +128,7 @@ const HomeShop = (props) => {
                 
                 }
 
-                {   cardCount  === 0 && DB[0] != "Loading" ? <Message message={"Lo sentimos. No hemos encontrado productos con ese nombre."}/> : null } 
+                {   cardCount  === 0 && DB[0] !== "Loading" ? <Message message={"Lo sentimos. No hemos encontrado productos con ese nombre."}/> : null } 
                 
 
 

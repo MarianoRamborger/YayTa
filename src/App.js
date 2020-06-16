@@ -215,9 +215,9 @@ const App = () => {
 
 
   // ELIMINATE THIS CONSOLE.LOG
-  const saveme = () => {
-    console.log(state2.shoppingList)
-  }
+  // const saveme = () => {
+  //   console.log(state2.shoppingList)
+  // }
 
 
 

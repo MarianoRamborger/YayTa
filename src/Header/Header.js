@@ -6,7 +6,7 @@ import { useBeforeunload } from 'react-beforeunload'
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
+// import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import {RegisterUser} from '../services/RegisterService'
 import Logo from '../Logo/lsf.png'
@@ -26,7 +26,8 @@ import ClearIcon from '@material-ui/icons/Clear';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { 
  // GenerateJWT, 
-  DecodeJWT, ValidateJWT 
+ // DecodeDecodeJWT, 
+  ValidateJWT 
   //,ValidateJWT 
         } from '../services/JWTservice'
 
@@ -278,7 +279,7 @@ const cartContext = useContext(shoppingCartContext)
            let j = localStorage.getItem("JWT")
       
            ValidateJWT(j, data => {
-             if (data.data == "ERROR") { localStorage.removeItem("JWT")  }
+             if (data.data === "ERROR") { localStorage.removeItem("JWT")  }
              else {
              
               isLogged.dispatch({ type: "LOGIN", user: JSON.parse(data.data), JWT: j})
@@ -339,7 +340,7 @@ const cartContext = useContext(shoppingCartContext)
 
           
 
-          <img className="logo" src={Logo} />
+          <img className="logo" src={Logo} alt="Ya y ta" />
     
 
           <div  />
