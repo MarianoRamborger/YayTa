@@ -338,9 +338,7 @@ const cartContext = useContext(shoppingCartContext)
           
 
           
-          {/* <Typography  id="web-title" > 
-           YA & TA
-          </Typography> */}
+
           <img className="logo" src={Logo} />
     
 
