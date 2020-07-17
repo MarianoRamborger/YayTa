@@ -6,13 +6,13 @@ import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
+// import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 
-
+import {SpringModal} from '../../PicModal/Modal'
 
 
 const useStyles = makeStyles({
@@ -76,16 +76,21 @@ const onChangeHandler = (event) => {
   return (
     <Card className={`${classes.root} card`} id={props.id}>
       <CardActionArea className="card-area">
-        <CardMedia 
+        {/* <CardMedia 
           className={`${classes.media} card-image`}
           image = {props.picture} style={
             { width: "20% !important", height: "400px"
-            }}
-                                                        
+             }}
+
+         
+
           title={props.title}
          
-        />
-         
+        /> */}
+          <SpringModal className={`card-image`} fullScreenClassName={"full-screen-control"}  image={props.picture} />
+
+
+
         <CardContent className="card-content">
           <Typography gutterBottom variant="h5" component="h2" className="card-title" >
             {props.name}

@@ -23,8 +23,14 @@ const initialState = { isAuthenticated: false, user: null };
 
 export const shoppingCartContext = React.createContext();
 
-const shoppingCartInitialState = { shoppingList : [], total : 0 }
+const shoppingCartInitialState = { shoppingList : [], total : 0 , totalWeight: 0}
 
+let r2d = (number) => {
+ //rounds to two decimals. Oddly, sin redondear la calculadora de peso se rompe al bajar de 0.8 a 0.6
+  
+
+  return Math.round(number * 100) / 100
+}
 
 //Ojo que no es el hook si no la función.
 const reducer = (state, action) => {
@@ -60,118 +66,157 @@ const shoppingCartReducer = (state2, action2) => {
 
     case "ADD": 
     let newProduct = true;
+
+    //Loops thru shopping cart, si está just adds +1 a ese producto.
     for (let index = 0; index < state2.shoppingList.length; index++) {
-      if  (state2.shoppingList[index].productId === action2.info.productId) {
-        newProduct = false    
-        state2.shoppingList[index].cantidad++  
-        state2.total += action2.info.price
+        if  (state2.shoppingList[index].productId === action2.info.productId) {
+          //A new product es añadido.
+          newProduct = false    
+          state2.shoppingList[index].cantidad++  
+          state2.total += action2.info.price
+          state2.totalWeight += action2.info.weight
         
       }}
-      if (newProduct === false) {
-      return {
-        ...state2
-      }}
-    if (newProduct === true) { state2.total += action2.info.price  
-    return  {shoppingList : state2.shoppingList.push(action2.info),  ...state2 }} //Tomá nota de lo que solía ser este bug: array.push mete el nuevo elemento al final, y devuelve el length del array. Si devolvías el ...state2 antes,  te quedabas, en vez de con el array, con el length. Por eso se devuelve después.
+        if (newProduct === false) {
+          //Follow up: Si un product existente recibió +1, return rest of the state.
+        return {
+          ...state2
+        }}
+
+        //Si truly era un nuevo producto tho, añadilo.
+    if (newProduct === true) { 
+      state2.total += action2.info.price;  
+      state2.totalWeight += action2.info.weight;
+        return  {shoppingList : state2.shoppingList.push(action2.info),  ...state2 }
+      } //Tomá nota de lo que solía ser este bug: array.push mete el nuevo elemento al final, y devuelve el length del array. Si devolvías el ...state2 antes,  te quedabas, en vez de con el array, con el length. Por eso se devuelve después.
 
      break
 
     case "PLUSONE": 
 
+    //Loops thru cart, finds matching product, adds one en cantidad.
     for (let index = 0; index < state2.shoppingList.length; index++) {
      
       if (state2.shoppingList[index].productId === action2.info.productId) {
     
         state2.shoppingList[index].cantidad++
         state2.total += action2.info.price
+        state2.totalWeight += action2.info.weight;
       }}
       return { ...state2}
 
 
     case "TARGETNUMBER":
+   // Same logic as add, first checks if product already exists.
 
       let newProduct2 = true;
       for (let index = 0; index < state2.shoppingList.length; index++) {
         if  (state2.shoppingList[index].productId === action2.info.productId) {
+          //if it does
           newProduct2 = false    
           let removePrice = state2.shoppingList[index].price * state2.shoppingList[index].cantidad
+          let removeWeight = state2.shoppingList[index].weight * state2.shoppingList[index].cantidad
           state2.total -= removePrice
-         
+          state2.totalWeight -= removeWeight
+
+          // Calculates and removes the price and weight of the product currenly on the card.
           if (action2.info.cantidad ===  0) {
-            console.log("2www")
+              //Si es zero, deletes it altogether.
             state2.shoppingList.splice([index], 1)
 
           } else {
+            // if not, it replaces it with the new target number.
           state2.shoppingList[index].cantidad = action2.info.cantidad   
           state2.total += action2.info.price * action2.info.cantidad
+          state2.totalWeight += action2.info.weight * action2.info.cantidad
         }
           
         }}
         if (newProduct2 === false) {
+          //And then returns the state.
         return {
           ...state2
 
         }}
         
         if (newProduct2 === true && action2.info.cantidad === 0 )  {
+          // Else if its a new product, and the quantity is 0, do nothing.
           return {...state2}      
         }
 
       if (newProduct2 === true  )  {
-        if (state2.info === undefined) {console.log("ooopse")}
-         state2.total += action2.info.cantidad * action2.info.price  
+        if (state2.info === undefined) { return null}
+
+         // Pero si el producto es indeed new, it adds it with a quantity equal to the number.
+         state2.total += action2.info.cantidad * action2.info.price 
+         state2.totalWeight += action2.info.cantidad * action2.info.weight
+         
       return  {shoppingList : state2.shoppingList.push(action2.info),  ...state2 }} 
   
 
        break
  
       case "REMOVE":
-
+ 
+      // Iterates thru cart, if matching id, remove it.
         for (let index = 0; index < state2.shoppingList.length; index++) {
           if (state2.shoppingList[index].productId === action2.info.productId) {
     
             let removePrice = state2.shoppingList[index].price * state2.shoppingList[index].cantidad
+            let removeWeight = state2.shoppingList[index].weight * state2.shoppingList[index].cantidad
             state2.total -= removePrice
+            state2.totalWeight -= removeWeight
             state2.shoppingList.splice([index], 1)
           }}
         
         return { ...state2}
 
       case "MINUSONE":
+        //iterates thru cart
         for (let index = 0; index < state2.shoppingList.length; index++) {
           if (state2.shoppingList[index].productId === action2.info.productId) {
-            if (state2.shoppingList[index].cantidad === 1) { state2.shoppingList.splice([index], 1); state2.total -= action2.info.price }
-            else {state2.shoppingList[index].cantidad-- ; state2.total -= action2.info.price }
+
+            //should quantity become 0, clipeala.
+            if (state2.shoppingList[index].cantidad === 1) { state2.shoppingList.splice([index], 1); 
+              console.log(`Se le restará ${action2.info.weight} a ${state2.totalWeight}`)
+              console.log(0.20000000000000007 -0.2)
+              state2.total -= action2.info.price ; state2.totalWeight =  r2d(state2.totalWeight - action2.info.weight)}
+
+
+            else {state2.shoppingList[index].cantidad-- 
+              console.log(`Se le restará ${action2.info.weight} a ${state2.totalWeight}`) 
+              state2.total -= action2.info.price ; state2.totalWeight =  r2d(state2.totalWeight - action2.info.weight) }
+              //POSSIBLY AGREGAR r2d in this fashion al resto
           }}
           return { ...state2}
 
       case "LOAD": 
-      state2.shoppingList = action2.loadedShoppingList
-      console.log(state2.shoppingList)
-      let pricetotal = 0
-      for (let index = 0; index < state2.shoppingList.length; index++) {
-        pricetotal += state2.shoppingList[index].price * state2.shoppingList[index].cantidad 
-      }
-      state2.total = pricetotal
+        state2.shoppingList = action2.loadedShoppingList
+        console.log(state2.shoppingList)
+        let pricetotal = 0
+        for (let index = 0; index < state2.shoppingList.length; index++) {
+           pricetotal += state2.shoppingList[index].price * state2.shoppingList[index].cantidad 
+        }
+        state2.total = pricetotal
 
-      return {...state2}
+        return {...state2}
 
       case "EMPTY": {
-        state2.shoppingList = []
-        state2.total = 0
-        return {...state2}
+          state2.shoppingList = []
+          state2.total = 0
+          return {...state2}
       }
 
       case "TEST": {
-        console.log("TEST")
-        break
+          console.log("TEST")
+          break
       }
 
 
    
     
     default: console.log("default")
-    return {...state2}
+      return {...state2}
   }}
   
 

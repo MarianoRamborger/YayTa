@@ -5,7 +5,6 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
 import Button from '@material-ui/core/Button';
-// import { GenerateJWT, DecodeJWT, ValidateJWT } from '../services/JWTservice'
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -48,7 +47,7 @@ const Fade = React.forwardRef(function Fade(props, ref) {
 
 let controller = true;
 
-console.log("modal mounted")
+
 
 Fade.propTypes = {
   children: PropTypes.element,
@@ -62,7 +61,7 @@ export default function SpringModal(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [formState, changeState] = React.useState( {username : "", password : ""})
-  const [registerFormState, changeRegisterState] = React.useState( {name: "", username : "", password : ""})
+  const [registerFormState, changeRegisterState] = React.useState( {name: "", username : "", password : "", phone: ""})
   
  
 
@@ -80,11 +79,14 @@ export default function SpringModal(props) {
     })
    
   }
+
+  //Ojo, username es actually el email.
   const handleRegisterNameChange = (event) => {
     changeRegisterState ( {
       name: event.target.value,
       username : registerFormState.username,
       password : registerFormState.password,
+      phone: registerFormState.phone
     }) 
   }
   const handleRegisterUsernameChange = (event) => {
@@ -92,6 +94,7 @@ export default function SpringModal(props) {
       name: registerFormState.name,
       username : event.target.value,
       password : registerFormState.password,
+      phone: registerFormState.phone
     }) 
   }
   const handleRegisterPasswordChange = (event) => {
@@ -99,8 +102,18 @@ export default function SpringModal(props) {
       name: registerFormState.name,
       username : registerFormState.username,
       password : event.target.value,
+      phone: registerFormState.phone
     }) 
   }
+  const handleRegisterPhoneChange = (event) => {
+    changeRegisterState ( {
+      name: registerFormState.name,
+      username : registerFormState.username,
+      password : registerFormState.password,
+      phone: event.target.value
+    }) 
+  }
+
 
 
   const handleResetStates = () => {
@@ -160,10 +173,11 @@ export default function SpringModal(props) {
     const Name = registerFormState.name
     const Username = registerFormState.username
     const Password = registerFormState.password
+    const Phone = registerFormState.phone
  
     if (Name.trim().length > 3 || Username.trim().length > 4 || Password.trim().length > 5) {
 
-      props.Register(Name, Username, Password)
+      props.Register(Name, Username, Password, Phone)
       controller = true
     }
     else  {
@@ -174,7 +188,7 @@ export default function SpringModal(props) {
   
 
   
- 
+ //O sea, if login.
  if (props.logMode === true) {
 
   return (
@@ -215,6 +229,8 @@ export default function SpringModal(props) {
     </div>
   );
 }
+
+// O sea, para registrar.
 else {
   return (<div>
   
@@ -241,6 +257,7 @@ else {
           <input className="modal-input"  type="text" name="name" placeholder="Nombre" onChange={handleRegisterNameChange} />
           <input className="modal-input"  type="text" name="user" placeholder="Email" onChange={handleRegisterUsernameChange} />
           <input className="modal-input" type="text"  name="password" placeholder="Contraseña" onChange={handleRegisterPasswordChange}/>
+          <input className="modal-input" type="text" name="phone" placeholder="Celular" onChange={handleRegisterPhoneChange} />
 
           <Button className="modal-button" size="small" variant="contained" color="primary" onClick={register}> Registrarme </Button>
           <Button className="modal-button" size="small" variant="contained" color="primary" onClick={props.handleLogMode}> Atrás </Button>

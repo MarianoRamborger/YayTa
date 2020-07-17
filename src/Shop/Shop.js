@@ -62,7 +62,9 @@ const HomeShop = (props) => {
                                 price = {data.price}
                                 desc = {data.desc}
                                 stock = {data.stock}
+                                weight = {data.weight}
 
+                                //Este cachito displayea la quantity del producto en la shop si ya está en el carrito
                                 {...shopList.state2.shoppingList.map(Qdata => {
 
                                     if (Qdata.productId === data._id) {
@@ -98,6 +100,7 @@ const HomeShop = (props) => {
                         price = {data.price}
                         desc = {data.desc}
                         stock = {data.stock}
+                        weight = {data.weight}
 
                         
 

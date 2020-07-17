@@ -100,7 +100,10 @@ export default function SwipeableTemporaryDrawer() {
       <Divider />
       <List className="checkout-list">
       <ListItem >
+      <div className="totals-div">
       <h3 className="shopping-cart-total"> Total : ${shopList.state2.total} </h3>
+      <h3 className="shopping-cart-total"> Peso : {shopList.state2.totalWeight}Kgs </h3>
+      </div>
       </ListItem>
 
       <ListItem >

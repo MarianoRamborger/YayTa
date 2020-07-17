@@ -193,9 +193,9 @@ const useStyles = makeStyles((theme) => ({
     })
   }
 
-  const Register = (Name, Username, Password) => {
+  const Register = (Name, Username, Password, Phone) => {
    
-    RegisterUser(Name, Username, Password, (res, err) => {
+    RegisterUser(Name, Username, Password, Phone, (res, err) => {
       if (err) {
         handleErrorMsg("Todos los campos deben poseer al menos cuatro caracteres.")
       }
@@ -215,18 +215,21 @@ const useStyles = makeStyles((theme) => ({
 
 
 const LogOut = () => {
-  handleMenuClose()
-  handleMobileMenuClose()
+    handleMenuClose()
+    handleMobileMenuClose()
+    
+    // Uploads and then empties the cart, logs out.
 
-  upCart(isLogged.state.user, cartContext.state2.shoppingList)
+    upCart(isLogged.state.user, cartContext.state2.shoppingList)
 
-  isLogged.dispatch({
-  type: "LOGOUT" 
-})
-  cartContext.dispatch2({
-    type: "EMPTY"
+    isLogged.dispatch({
+        type: "LOGOUT" 
   })
+    cartContext.dispatch2({
+        type: "EMPTY"
+    })
 }
+
 
 const isLogged = useContext(AuthContext) /* CONTEXT */
 

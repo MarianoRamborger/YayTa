@@ -264,7 +264,22 @@ body {
     src: local(Pacifico-Regular), url('./fonts/pcdanglestar.ttf')
 }
 
+.card-image {
+  float: baseline;
+    width:  100%;
+    height: 250px;
+    object-fit: cover;
+}
 
+.full-screen-control {
+  max-width: 80vw;
+  max-height: 80vh;
+}
+
+.totals-div {
+ display: flex;
+ flex-flow: column wrap
+}
 
 #web-title {
   font-family: Ayuma;
