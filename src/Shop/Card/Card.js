@@ -47,25 +47,24 @@ const ShopListRemove = () => {
 
 const targetNumber = (number) => {
   ShopList.dispatch2({
-    type: "TARGETNUMBER",
+    type: "SPECIFIC",
     info: {...props, cantidad: number}
   })
+  
 }
-
-
 
 const ShopList = useContext(shoppingCartContext) /* CONTEXT */
 
-
-
-
 const onChangeHandler = (event) => {
-    
+ 
+
+ 
     if ( !isNaN(event.target.value) && 
     event.target.value <= props.stock &&
      !event.target.value.includes(".") ) {
       
-
+     
+      
       targetNumber(Number(event.target.value))
     }
    

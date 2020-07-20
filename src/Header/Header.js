@@ -32,7 +32,6 @@ import {
         } from '../services/JWTservice'
 
 
-
 const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
@@ -101,7 +100,6 @@ const useStyles = makeStyles((theme) => ({
 
   const PrimarySearchAppBar = (props) => {
 
-
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -111,7 +109,6 @@ const useStyles = makeStyles((theme) => ({
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const [logMode, swapLogMode] = React.useState(true)
-
 
 
   const handleProfileMenuOpen = (event) => {
@@ -211,9 +208,6 @@ const useStyles = makeStyles((theme) => ({
     })
   }
 
-
-
-
 const LogOut = () => {
     handleMenuClose()
     handleMobileMenuClose()
@@ -274,10 +268,12 @@ const cartContext = useContext(shoppingCartContext)
     </Menu>
   );
 
+
+  // JWT SESSION LOGIN con JWT
   useEffect(() => {
 
     if (!isLogged.state.isAuthenticated && typeof Storage !== "undefined" && localStorage.getItem("JWT") !== null) {
-        console.log("hooking why dos veces? revisar")
+     
 
            let j = localStorage.getItem("JWT")
       
@@ -353,7 +349,7 @@ const cartContext = useContext(shoppingCartContext)
           {/* Desktop Profile*/}
           
           <IconButton className="shopping-cart-icon" > 
-           <Badge badgeContent={cartContext.state2.shoppingList.length} color="secondary" > <ShoppingCart /> </Badge>
+           <Badge badgeContent={cartContext.state2.shoppingList.length} color="secondary" > <ShoppingCart  handleModelToggler={handleModelToggler} /> </Badge>
           </IconButton>
           
           { 

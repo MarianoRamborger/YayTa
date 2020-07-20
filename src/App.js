@@ -27,7 +27,6 @@ const shoppingCartInitialState = { shoppingList : [], total : 0 , totalWeight: 0
 
 let r2d = (number) => {
  //rounds to two decimals. Oddly, sin redondear la calculadora de peso se rompe al bajar de 0.8 a 0.6
-  
 
   return Math.round(number * 100) / 100
 }
@@ -39,9 +38,7 @@ const reducer = (state, action) => {
          
       localStorage.setItem("JWT", action.JWT)
   
-      // if (localStorage.getItem("Shopping Cart")) {localStorage.removeItem("Shopping Cart")}
-      // OJO, TENERLO ACA IMPLICA QUE UNA VEZ TE LOGUEAS PERDES EL CARRITO PARA SIEMPRE. FALTARÍA METERLO
-      // EL CONTENIDO EN EL USUARIO
+   
 
         return {
                 ...state, isAuthenticated: true, user: action.user
@@ -70,11 +67,21 @@ const shoppingCartReducer = (state2, action2) => {
     //Loops thru shopping cart, si está just adds +1 a ese producto.
     for (let index = 0; index < state2.shoppingList.length; index++) {
         if  (state2.shoppingList[index].productId === action2.info.productId) {
+
           //A new product es añadido.
+
+          if (state2.shoppingList[index].cantidad === action2.info.stock) 
+          { 
+            return {...state2}  //Traba para el limte de stock.
+          }
+
           newProduct = false    
           state2.shoppingList[index].cantidad++  
           state2.total += action2.info.price
-          state2.totalWeight += action2.info.weight
+          state2.totalWeight = r2d(state2.totalWeight) + r2d(action2.info.weight)
+          state2.totalWeight = r2d(state2.totalWeight)
+          
+        
         
       }}
         if (newProduct === false) {
@@ -86,7 +93,7 @@ const shoppingCartReducer = (state2, action2) => {
         //Si truly era un nuevo producto tho, añadilo.
     if (newProduct === true) { 
       state2.total += action2.info.price;  
-      state2.totalWeight += action2.info.weight;
+      state2.totalWeight = r2d(state2.totalWeight) + r2d(action2.info.weight)
         return  {shoppingList : state2.shoppingList.push(action2.info),  ...state2 }
       } //Tomá nota de lo que solía ser este bug: array.push mete el nuevo elemento al final, y devuelve el length del array. Si devolvías el ...state2 antes,  te quedabas, en vez de con el array, con el length. Por eso se devuelve después.
 
@@ -99,65 +106,105 @@ const shoppingCartReducer = (state2, action2) => {
      
       if (state2.shoppingList[index].productId === action2.info.productId) {
     
-        state2.shoppingList[index].cantidad++
-        state2.total += action2.info.price
-        state2.totalWeight += action2.info.weight;
+      
+        if (state2.shoppingList[index].cantidad < action2.info.stock) { //Evita PASARSE del STOCK AGREGAR ESTO A LOS OTROS ADD METHODS
+          state2.shoppingList[index].cantidad++
+          state2.total += action2.info.price
+          state2.totalWeight += r2d(action2.info.weight);
+          state2.totalWeight = r2d(state2.totalWeight)
+        }
+       
       }}
       return { ...state2}
 
-
-    case "TARGETNUMBER":
-   // Same logic as add, first checks if product already exists.
-
-      let newProduct2 = true;
+      case "SPECIFIC": 
+     
+      let newProduct3 = true
+      
+      //Checks si el producto existe. Si lo hace, suma a un objeto existente.
       for (let index = 0; index < state2.shoppingList.length; index++) {
-        if  (state2.shoppingList[index].productId === action2.info.productId) {
-          //if it does
-          newProduct2 = false    
-          let removePrice = state2.shoppingList[index].price * state2.shoppingList[index].cantidad
-          let removeWeight = state2.shoppingList[index].weight * state2.shoppingList[index].cantidad
-          state2.total -= removePrice
-          state2.totalWeight -= removeWeight
-
-          // Calculates and removes the price and weight of the product currenly on the card.
-          if (action2.info.cantidad ===  0) {
-              //Si es zero, deletes it altogether.
-            state2.shoppingList.splice([index], 1)
-
-          } else {
-            // if not, it replaces it with the new target number.
-          state2.shoppingList[index].cantidad = action2.info.cantidad   
-          state2.total += action2.info.price * action2.info.cantidad
-          state2.totalWeight += action2.info.weight * action2.info.cantidad
-        }
-          
-        }}
-        if (newProduct2 === false) {
-          //And then returns the state.
-        return {
-          ...state2
-
-        }}
         
-        if (newProduct2 === true && action2.info.cantidad === 0 )  {
-          // Else if its a new product, and the quantity is 0, do nothing.
-          return {...state2}      
-        }
+          if (state2.shoppingList[index].productId === action2.info.productId) {
+      
+              newProduct3 = false
+              let removePrice = state2.shoppingList[index].price * state2.shoppingList[index].cantidad
+              let removeWeight = state2.shoppingList[index].weight * state2.shoppingList[index].cantidad
+              state2.total -= removePrice
+              state2.totalWeight = r2d(state2.totalWeight) - r2d(removeWeight) 
+      
+              state2.shoppingList[index].cantidad = action2.info.cantidad
+      
+              if (action2.info.cantidad === 0) {
+                state2.shoppingList.splice([index], 1)
+                return {...state2}
+              }
 
-      if (newProduct2 === true  )  {
-        if (state2.info === undefined) { return null}
+              let addPrice =  action2.info.price * action2.info.cantidad
+              let addWeight = action2.info.weight * action2.info.cantidad
 
-         // Pero si el producto es indeed new, it adds it with a quantity equal to the number.
-         state2.total += action2.info.cantidad * action2.info.price 
-         state2.totalWeight += action2.info.cantidad * action2.info.weight
-         
-      return  {shoppingList : state2.shoppingList.push(action2.info),  ...state2 }} 
+              state2.total += addPrice
+              state2.totalWeight += r2d(addWeight)
+              state2.totalWeight = r2d(state2.totalWeight)
+          }
+      
+      }
+
+      //Si no, lo appendea a la lista.
+      if (newProduct3 === true) {
+
+        state2.total += action2.info.price * action2.info.cantidad;  
+        state2.totalWeight = r2d(state2.totalWeight) + r2d(action2.info.weight * action2.info.cantidad)
+
+        return  {shoppingList : state2.shoppingList.push(action2.info),  ...state2 }
+        
+      }
+      else {console.log(newProduct3)}
+
+      return { ...state2}
   
+  // CASO OBSOLETO REEMPLAZADO POR SPECIFIC
+  //   case "TARGETNUMBER":  
+  //  // Same logic as add, first checks if product already exists.
+  //     let newProduct2 = true;
+  //     for (let index = 0; index < state2.shoppingList.length; index++) {     
+  //       if  (state2.shoppingList[index].productId === action2.info.productId) {    
+  //         //if it does
+  //         newProduct2 = false    
+  //         let removePrice = state2.shoppingList[index].price * state2.shoppingList[index].cantidad
+  //         let removeWeight = state2.shoppingList[index].weight * state2.shoppingList[index].cantidad
+  //         state2.total -= removePrice
+  //         state2.totalWeight -= r2d(removeWeight)
+  //         // Calculates and removes the price and weight of the product currenly on the card.
+  //         if (action2.info.cantidad ===  0) {
+  //             //Si es zero, deletes it altogether.
+  //           state2.shoppingList.splice([index], 1)
+  //         } else {
+  //           // if not, it replaces it with the new target number.
+  //         state2.shoppingList[index].cantidad = action2.info.cantidad   
+  //         state2.total += action2.info.price * action2.info.cantidad
+  //         let  totalWeight = action2.info.weight * action2.info.cantidad
+  //         state2.totalWeight += r2d(totalWeight)
+  //       }       
+  //       }}
+  //       if (newProduct2 === false) {
+  //         //And then returns the state.
+  //       return {
+  //         ...state2
+  //       }}      
+  //       if (newProduct2 === true && action2.info.cantidad === 0 )  {
+  //         // Else if its a new product, and the quantity is 0, do nothing.
+  //         return {...state2}      
+  //       }
+  //     if (newProduct2 === true  )  {       
+  //       if (state2.info === undefined) { return null}
+  //        // Pero si el producto es indeed new, it adds it with a quantity equal to the number.
+  //        state2.total += action2.info.cantidad * action2.info.price 
+  //        state2.totalWeight += action2.info.cantidad * action2.info.weight        
+  //     return  {shoppingList : state2.shoppingList.push(action2.info),  ...state2 }} 
+  //      break
 
-       break
- 
       case "REMOVE":
- 
+
       // Iterates thru cart, if matching id, remove it.
         for (let index = 0; index < state2.shoppingList.length; index++) {
           if (state2.shoppingList[index].productId === action2.info.productId) {
@@ -165,7 +212,9 @@ const shoppingCartReducer = (state2, action2) => {
             let removePrice = state2.shoppingList[index].price * state2.shoppingList[index].cantidad
             let removeWeight = state2.shoppingList[index].weight * state2.shoppingList[index].cantidad
             state2.total -= removePrice
-            state2.totalWeight -= removeWeight
+            state2.totalWeight = r2d(state2.totalWeight) - r2d(removeWeight) 
+  
+
             state2.shoppingList.splice([index], 1)
           }}
         
@@ -178,15 +227,17 @@ const shoppingCartReducer = (state2, action2) => {
 
             //should quantity become 0, clipeala.
             if (state2.shoppingList[index].cantidad === 1) { state2.shoppingList.splice([index], 1); 
-              console.log(`Se le restará ${action2.info.weight} a ${state2.totalWeight}`)
-              console.log(0.20000000000000007 -0.2)
-              state2.total -= action2.info.price ; state2.totalWeight =  r2d(state2.totalWeight - action2.info.weight)}
+
+              state2.total -= action2.info.price ; 
+              state2.totalWeight =  r2d(state2.totalWeight - action2.info.weight)
+              state2.totalWeight = r2d(state2.totalWeight)}
 
 
             else {state2.shoppingList[index].cantidad-- 
               console.log(`Se le restará ${action2.info.weight} a ${state2.totalWeight}`) 
-              state2.total -= action2.info.price ; state2.totalWeight =  r2d(state2.totalWeight - action2.info.weight) }
-              //POSSIBLY AGREGAR r2d in this fashion al resto
+              state2.total -= action2.info.price ; state2.totalWeight =  r2d(state2.totalWeight - action2.info.weight)
+              state2.totalWeight = r2d(state2.totalWeight) }
+             
           }}
           return { ...state2}
 
@@ -194,16 +245,20 @@ const shoppingCartReducer = (state2, action2) => {
         state2.shoppingList = action2.loadedShoppingList
         console.log(state2.shoppingList)
         let pricetotal = 0
+        let totalWeight = 0
         for (let index = 0; index < state2.shoppingList.length; index++) {
-           pricetotal += state2.shoppingList[index].price * state2.shoppingList[index].cantidad 
+           pricetotal += state2.shoppingList[index].price * state2.shoppingList[index].cantidad
+           totalWeight += r2d(state2.shoppingList[index].weight * state2.shoppingList[index].cantidad) 
         }
         state2.total = pricetotal
+        state2.totalWeight = totalWeight
 
         return {...state2}
 
       case "EMPTY": {
           state2.shoppingList = []
           state2.total = 0
+          state2.totalWeight = 0
           return {...state2}
       }
 
