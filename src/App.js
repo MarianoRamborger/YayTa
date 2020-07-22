@@ -61,8 +61,13 @@ const reducer = (state, action) => {
 const shoppingCartReducer = (state2, action2) => {
   switch (action2.type) {
 
+    
+
     case "ADD": 
-    let newProduct = true;
+    let newProduct = true;  
+
+    console.log(state2.shoppingList)
+   
 
     //Loops thru shopping cart, si está just adds +1 a ese producto.
     for (let index = 0; index < state2.shoppingList.length; index++) {
@@ -234,7 +239,7 @@ const shoppingCartReducer = (state2, action2) => {
 
 
             else {state2.shoppingList[index].cantidad-- 
-              console.log(`Se le restará ${action2.info.weight} a ${state2.totalWeight}`) 
+            
               state2.total -= action2.info.price ; state2.totalWeight =  r2d(state2.totalWeight - action2.info.weight)
               state2.totalWeight = r2d(state2.totalWeight) }
              
@@ -243,7 +248,7 @@ const shoppingCartReducer = (state2, action2) => {
 
       case "LOAD": 
         state2.shoppingList = action2.loadedShoppingList
-        console.log(state2.shoppingList)
+      
         let pricetotal = 0
         let totalWeight = 0
         for (let index = 0; index < state2.shoppingList.length; index++) {
@@ -314,10 +319,7 @@ const App = () => {
   }, [])
 
 
-  // ELIMINATE THIS CONSOLE.LOG
-  // const saveme = () => {
-  //   console.log(state2.shoppingList)
-  // }
+
 
 
 

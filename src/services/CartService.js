@@ -20,7 +20,7 @@ export const upCart = async (user, cart, cb) => {
 //agregar la info del checkout, como direccion, cp, tipo de envio y comments adicionales,
 export const checkout = async (user, cart, cb) => {
     
-    console.log("aa")
+
 
     try {
         await axios.post(`${SL}/api/checkout`, {
@@ -40,12 +40,12 @@ export const checkout = async (user, cart, cb) => {
 }
 
 export const downCart = async (user, cb ) => {
-    console.log(user)
+
     try { await axios.post(`${SL}/api/cart/download`, {
         user: user
     })
     .then(function(res) {
-        console.log(res)
+        
         cb(res)
     })
 }

@@ -27,15 +27,21 @@ const useStyles = makeStyles({
 export default function SingleCard(props) {
   const classes = useStyles();
 
+  const [maxStock, showMaxStock] = React.useState(false)
   
-const ShopListAdd = () => {
+  const ShopListAdd = () => {
 
-    // console.log(ShopList.state2.shoppingList)
 
-    // console.log(ShopList.state2.shoppingList.some(props.productid))
 
-    //POR ACA VA
+    //Finds si se alcanzó el máx stock, lo displayea thus.
+    ShopList.state2.shoppingList.find( product => {
+      if (product.productId === props.productId) { 
+        if (product.cantidad >= props.stock ) {
 
+            return showMaxStock(true)
+        }} return null   
+      }) 
+     
     ShopList.dispatch2({
         type: "ADD",
         info: {...props, cantidad: 1 
@@ -45,6 +51,9 @@ const ShopListAdd = () => {
 }
 
 const ShopListRemove = () => {
+
+  if (maxStock)  { showMaxStock(false) } //Borra la max stock warning al sacar 1.
+
   ShopList.dispatch2({
     type: "MINUSONE",
     info: {...props}
@@ -53,10 +62,27 @@ const ShopListRemove = () => {
 
 
 const targetNumber = (number) => {
-  ShopList.dispatch2({
-    type: "SPECIFIC",
-    info: {...props, cantidad: number}
-  })
+
+   
+if (number < props.stock)
+  {
+    ShopList.dispatch2({
+      type: "SPECIFIC",
+      info: {...props, cantidad: number}
+    })
+    showMaxStock(false)
+    
+  }
+
+  else if (number === props.stock)
+  {
+    ShopList.dispatch2({
+      type: "SPECIFIC",
+      info: {...props, cantidad: number}
+    })
+    showMaxStock(true)
+  }
+ 
   
 }
 
@@ -64,22 +90,25 @@ const ShopList = useContext(shoppingCartContext) /* CONTEXT */
 
 const onChangeHandler = (event) => {
  
+  if ( !isNaN(event.target.value) && 
+  event.target.value > props.stock &&
+   !event.target.value.includes(".") ) {
+    
+    showMaxStock(true)
+    
+  }
 
- 
     if ( !isNaN(event.target.value) && 
     event.target.value <= props.stock &&
      !event.target.value.includes(".") ) {
       
-     
-      
       targetNumber(Number(event.target.value))
+      
     }
+
    
+
 }
-
-const [showStock, changeShowStock] = React.useState(false)
-
-const handleShowStock = () => {changeShowStock(!showStock)}
 
 
   return (
@@ -122,7 +151,13 @@ const handleShowStock = () => {changeShowStock(!showStock)}
         
       </CardActions>
 
-        { showStock ? <p> máx stock: {props.stock} </p> : null}
+        { maxStock ? 
+          <div className="stock">
+              <p> máx stock: {props.stock} </p> 
+          </div>
+        : null}
+
+       
 
     </Card>
   );

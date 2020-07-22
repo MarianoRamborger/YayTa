@@ -42,5 +42,5 @@ export const ValidateJWT = (j, cb) => {
   (err) => {
     cb(err)
   }  )
-  .catch ((err) => { console.log("MUMUMUUU")}) 
+  .catch ((err) => { console.log("")}) 
 };

@@ -81,10 +81,12 @@ export default function SwipeableTemporaryDrawer(props) {
       <Divider />
       <List className="product-list">
 
+     
       {
+        
 
          shopList.state2.shoppingList.map(data => {
-      
+         
            
            return <Item props={data} key={data.productId} />
          } 

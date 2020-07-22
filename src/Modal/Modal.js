@@ -140,8 +140,7 @@ export default function SpringModal(props) {
     handleResetStates();
     props.handleErrorMsg("")
 
-    console.log("CLOSING DOWN")
-    
+
 
   };
 
