@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import {shoppingCartContext} from '../../App'
 import { AuthContext } from '../../App';
-import {checkout} from '../../services/CartService'
+// import {checkout} from '../../services/CartService'
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
@@ -44,12 +44,12 @@ export default function SwipeableTemporaryDrawer(props) {
   const auth = useContext(AuthContext)
 
 
-  const handleCheckout  = () => {
-    checkout(auth.state.user, shopList.state2.shoppingList, (res, err) => {
+  // const handleCheckout  = () => {
+  //   checkout(auth.state.user, shopList.state2.shoppingList, (res, err) => {
                     
                      
-   })
-  }
+  //  })
+  // }
   
 
   const toggleDrawer = (anchor, open) => (event) => {

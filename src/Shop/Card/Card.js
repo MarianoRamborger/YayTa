@@ -29,6 +29,13 @@ export default function SingleCard(props) {
 
   
 const ShopListAdd = () => {
+
+    // console.log(ShopList.state2.shoppingList)
+
+    // console.log(ShopList.state2.shoppingList.some(props.productid))
+
+    //POR ACA VA
+
     ShopList.dispatch2({
         type: "ADD",
         info: {...props, cantidad: 1 
@@ -70,6 +77,9 @@ const onChangeHandler = (event) => {
    
 }
 
+const [showStock, changeShowStock] = React.useState(false)
+
+const handleShowStock = () => {changeShowStock(!showStock)}
 
 
   return (
@@ -109,7 +119,11 @@ const onChangeHandler = (event) => {
         <Button size="small" color="primary" onClick={ShopListAdd}>
           <AddIcon className="shop-icons"  />
         </Button>
+        
       </CardActions>
+
+        { showStock ? <p> máx stock: {props.stock} </p> : null}
+
     </Card>
   );
 }
