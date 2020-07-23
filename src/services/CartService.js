@@ -18,18 +18,19 @@ export const upCart = async (user, cart, cb) => {
 }
 
 //agregar la info del checkout, como direccion, cp, tipo de envio y comments adicionales,
-export const checkout = async (user, cart, cb) => {
+export const checkout = async (user, cart, info, cb) => {
     
 
 
     try {
         await axios.post(`${SL}/api/checkout`, {
             user: user,
-            cart: cart
+            cart: cart,
+            info: info
         })
         .then(function(res) {
             cb(res)
-            window.open(res.data)
+            // window.open(res.data) HABILITAR 
             //this opens in a new window the thingie to pay
 
         })
