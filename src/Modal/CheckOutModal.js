@@ -174,11 +174,13 @@ export default function CheckOutModal(props) {
     else return 2
   }
   /////////////////////////////////////////////Calculador de Precio y Envio; considerar mover a otro componente ///////////////////////////////////////////////////////////
-  const envioCalculator = (value) => {
+  const envioCalculator = (value, optionalType) => {
+
+    console.log(optionalType)
 
     let zona = zonaCalculator(Number(value))
+    let tipoEnvio = optionalType || checkoutFormState.tipoEnvio
 
-    let tipoEnvio = checkoutFormState.tipoEnvio
     let pesoTotal = shopList.state2.totalWeight;
 
     console.log(tipoEnvio)
@@ -288,12 +290,8 @@ export default function CheckOutModal(props) {
 
    }
 
-
-  
-
-  const handleChangeEnvioType = (event) => {
+  const handleChangeEnvioType =  (event) => {
     
-
     if (event.target.value === 'local') {
       
       changeCheckoutFormState({...checkoutFormState, tipoEnvio: "local" })
@@ -314,14 +312,17 @@ export default function CheckOutModal(props) {
      
     }
 
-    envioCalculator(checkoutFormState.codPos)
+    envioCalculator(checkoutFormState.codPos, event.target.value)
+    
 
     ///PROBLEM PROBLEM PROBLEM ESTO SE ACTUALIZA TARDE PROBLEM PROBLEM
 
-
+    return null
   } 
 
 //---------------------------------------------------------------------------
+
+
 
   const handleOpen = () => {
    
