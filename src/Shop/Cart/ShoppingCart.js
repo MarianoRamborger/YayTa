@@ -101,7 +101,11 @@ export default function SwipeableTemporaryDrawer(props) {
       <ListItem >
       <div className="totals-div">
       <h3 className="shopping-cart-total"> Total : ${shopList.state2.total} </h3>
-      <h3 className="shopping-cart-total"> Peso : {shopList.state2.totalWeight}Kgs </h3>
+      {/*   <h3 className="shopping-cart-total"> Peso : {shopList.state2.totalWeight}Kgs </h3>
+        Temporalmente comentado, para utilizar el server de Heroku
+      
+       */}
+     
       </div>
       </ListItem>
 
