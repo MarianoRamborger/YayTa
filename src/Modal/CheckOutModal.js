@@ -315,7 +315,7 @@ export default function CheckOutModal(props) {
     envioCalculator(checkoutFormState.codPos, event.target.value)
     
 
-    ///PROBLEM PROBLEM PROBLEM ESTO SE ACTUALIZA TARDE PROBLEM PROBLEM
+
 
     return null
   } 
