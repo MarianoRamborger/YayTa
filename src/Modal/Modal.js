@@ -214,7 +214,7 @@ export default function SpringModal(props) {
             <form className="modal-form">
               
               <input className="modal-input"  type="text" name="user" placeholder="Email" onChange={handleUserNameChange} />
-              <input className="modal-input" type="text"  name="password" placeholder="Contraseña" onChange={handlePasswordChange}/>
+              <input className="modal-input" type="password" name="password" placeholder="Contraseña" onChange={handlePasswordChange}/>
 
               <Button className="modal-button" size="small" variant="contained" color="primary" onClick={handshake}> INGRESAR </Button>
               <Button className="modal-button" size="small" variant="contained" color="primary" onClick={props.handleLogMode}> Registrate </Button>
@@ -255,7 +255,7 @@ else {
           
           <input className="modal-input"  type="text" name="name" placeholder="Nombre" onChange={handleRegisterNameChange} />
           <input className="modal-input"  type="text" name="user" placeholder="Email" onChange={handleRegisterUsernameChange} />
-          <input className="modal-input" type="text"  name="password" placeholder="Contraseña" onChange={handleRegisterPasswordChange}/>
+          <input className="modal-input" type="password"  name="password" placeholder="Contraseña" onChange={handleRegisterPasswordChange}/>
           <input className="modal-input" type="text" name="phone" placeholder="Celular" onChange={handleRegisterPhoneChange} />
 
           <Button className="modal-button" size="small" variant="contained" color="primary" onClick={register}> Registrarme </Button>

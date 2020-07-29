@@ -5,8 +5,8 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
 import Button from '@material-ui/core/Button';
-import {checkout} from '../services/CartService'
-import { AuthContext } from '../App';
+// import {checkout} from '../services/CartService'
+// import { AuthContext } from '../App';
 import {shoppingCartContext} from '../App'
 
 
@@ -61,12 +61,17 @@ export default function CheckOutModal(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
-  const auth = useContext(AuthContext) 
+  // const auth = useContext(AuthContext) 
   const shopList = useContext(shoppingCartContext)
   const [checkoutFormState, changeCheckoutFormState] = React.useState({direccion:'',codPos:'',tel:'',comentarios:'',tipoEnvio:"Seleccione un tipo de envío"})
   const [formErrors, changeFormErrors] = React.useState({dirError:'', cpError:'', telError:'', comError:'',envError:'' })
   const [precioEnvio, changePrecioEnvio] = React.useState('')
+  const [demoState, showDemoState] = React.useState(false)
 
+
+  const handleDemoState = () => {
+    showDemoState(!demoState)
+  }
 
 
   //Form State onChange handling.---------------------------------------------------------
@@ -364,9 +369,11 @@ export default function CheckOutModal(props) {
 
   if (hasErrors === false) {
 
-       checkout(auth.state.user, shopList.state2.shoppingList, checkoutFormState, (res, err) => {
+    handleDemoState()
+
+  //      checkout(auth.state.user, shopList.state2.shoppingList, checkoutFormState, (res, err) => {
                   
-   })
+  //  })
 
   }
 
@@ -442,6 +449,13 @@ export default function CheckOutModal(props) {
             </div>
 
             <Button  color="primary" className="checkout-button pay-button" onClick={handleCheckout}> Pagar </Button>
+
+            {demoState === true ? 
+            <h3> No pueden realizarse pagos en la versión demo. </h3>
+            : 
+            null
+            }
+
             </form>
 
         

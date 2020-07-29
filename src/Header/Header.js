@@ -242,8 +242,11 @@ const cartContext = useContext(shoppingCartContext)
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose} className="profile-menu-button">Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose} className="profile-menu-button">My account</MenuItem>
+      {
+      /* Sacar para la final ver.
+        <MenuItem onClick={handleMenuClose} className="profile-menu-button">Profile</MenuItem>
+      <MenuItem onClick={handleMenuClose} className="profile-menu-button">My account</MenuItem> 
+      */}
       <MenuItem onClick={LogOut} className="profile-menu-button">Log Out</MenuItem>
 
     </Menu>
